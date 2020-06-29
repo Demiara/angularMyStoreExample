@@ -1,0 +1,14 @@
+.app-top-bar {
+  background-color: #1976d2;
+  padding: 16px;
+}
+.app-top-bar h1 {
+  color: white;
+  margin: 0;
+  font-weight: lighter;
+  font-size: 32px;
+}
+.app-top-bar a {
+  margin: 2px;
+  color: #1976d2;
+}
