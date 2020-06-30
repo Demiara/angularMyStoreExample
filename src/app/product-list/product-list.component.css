@@ -1,0 +1,24 @@
+:host {
+  padding: 10px;
+}
+table {
+  width: 90%;
+  margin: auto;
+}
+table th{
+  font-size: 18px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #1976d2;
+}
+table td{
+  font-size: 16px;
+  text-align: center;
+}
+h2 {
+  color: #1976d2;
+  margin: 0;
+  padding: 10px;
+  font-weight: lighter;
+  font-size: 28px;
+}
