@@ -6,6 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,12 +16,16 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
-    ProductListComponent
+    ProductListComponent,
+    AddToCartDialogComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +36,8 @@ import { ProductListComponent } from './product-list/product-list.component';
     MatToolbarModule,
     MatButtonModule,
     MatTableModule,
+    MatDialogModule,
+    MatSnackBarModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
@@ -42,6 +50,7 @@ import { ProductListComponent } from './product-list/product-list.component';
     )
   ],
   providers: [],
+  entryComponents: [AddToCartDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -31,7 +31,6 @@ export class ProductService {
     };
   }
 
-  /** Log a ProductService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`ProductService: ${message}`);
   }
