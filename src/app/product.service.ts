@@ -31,7 +31,7 @@ export class ProductService {
     };
   }
 
-  /** Log a HeroService message with the MessageService */
+  /** Log a ProductService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`ProductService: ${message}`);
   }
