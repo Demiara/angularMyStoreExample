@@ -1,17 +1,19 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './product';
 import { CartItem } from './cart-item';
 import { MessageService } from './message.service';
 import { BrowserStorageService } from './storage.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private items: CartItem[];
   private readonly storeKey = 'cartItems';
+
+  private readonly _cartItems$ = new BehaviorSubject<CartItem[]>([]);
+  public readonly cartItems$: Observable<CartItem[]> = this._cartItems$.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -19,25 +21,27 @@ export class CartService {
     private sessionStorageService: BrowserStorageService,
     private localStorageService: BrowserStorageService,
   ) {
-    this.items = this.getItems();
+    this._cartItems$.next(this.getItems());
+    this.cartItems$.subscribe(value =>
+      this.localStorageService.set(this.storeKey, JSON.stringify(value)),
+    );
   }
 
-  addToCart(product: Product): boolean {
+  public addToCart(product: Product): boolean {
     if (!this.isProductInCart(product)) {
-      this.items = [...this.items, { productId: product.id, quantity: 1 }];
+      this._cartItems$.next([...this._cartItems$.value, { productId: product.id, quantity: 1 }]);
     } else {
       const isUpdated = this.updateProductQuantity(product);
       if (!isUpdated) {
         return false;
       }
     }
-    this.localStorageService.set(this.storeKey, JSON.stringify(this.items));
     this.log(`${product.name} successfully added to cart`);
     return true;
   }
 
   private foundProductIndex(product: Product): number {
-    return this.items.findIndex((i) => i.productId === product.id);
+    return this._cartItems$.value.findIndex(i => i.productId === product.id);
   }
 
   private isProductInCart(product: Product): boolean {
@@ -47,20 +51,20 @@ export class CartService {
 
   private updateProductQuantity(product: Product): boolean {
     const foundIndex = this.foundProductIndex(product);
-    const foundItem = this.items[foundIndex];
+    const foundItem = this._cartItems$.value[foundIndex];
     if (foundItem.quantity >= product.inStock) {
       return false;
     }
-    const itemsClone = this.items.slice();
+    const itemsClone = this._cartItems$.value.slice();
     itemsClone.splice(foundIndex, 1, {
       ...foundItem,
       quantity: foundItem.quantity + 1,
     });
-    this.items = itemsClone;
+    this._cartItems$.next(itemsClone);
     return true;
   }
 
-  getItems(): CartItem[] {
+  private getItems(): CartItem[] {
     try {
       return JSON.parse(this.localStorageService.get(this.storeKey)) || [];
     } catch (e) {
@@ -68,9 +72,16 @@ export class CartService {
     }
   }
 
-  clearCart(): CartItem[] {
-    this.items = [];
-    return this.items;
+  public deleteProductFromCart(index: number, product: Product): void {
+    const itemsClone = this._cartItems$.value.slice();
+    itemsClone.splice(index, 1);
+    this._cartItems$.next(itemsClone);
+    this.log(`${product.name} successfully removed from cart`);
+  }
+
+  public clearCart(): void {
+    this._cartItems$.next([]);
+    this.log(`Cart has been cleared`);
   }
 
   getShippingPrices(): Observable<any> {

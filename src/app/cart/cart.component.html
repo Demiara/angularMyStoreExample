@@ -1,6 +1,10 @@
-<div class="cart-item" *ngFor="let item of cartProducts$ | async; let index = index">
-  <span>Id: {{ item.id }}</span>
-  <span>Name: {{ item.name }}</span>
-  <span>Price: {{ item.price }}</span>
-  <span>Quantity: {{ cartItems[index].quantity }}</span>
-</div>
+<ng-container *ngIf="cartItems$ | async as cartItems">
+  <div class="cart-item" *ngFor="let item of cartProducts$ | async; let index = index">
+    <span>Id: {{ item.id }}</span>
+    <span>Name: {{ item.name }}</span>
+    <span>Price: {{ item.price }}</span>
+    <span>Quantity: {{ cartItems[index].quantity }}</span>
+    <button mat-raised-button (click)="deleteProductFromCart(index, item)">Delete</button>
+  </div>
+  <button *ngIf="cartItems.length" mat-raised-button (click)="clearCart()">Clear cart</button>
+</ng-container>
