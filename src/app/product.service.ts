@@ -3,7 +3,8 @@ import { Product } from './product';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, share, startWith, tap } from 'rxjs/operators';
+import { muteFirst } from './utils/api-util';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,10 @@ export class ProductService {
   };
 
   private readonly _products$ = new BehaviorSubject<Product[]>(null);
-  public readonly products$: Observable<Product[]> = this._products$.asObservable();
+  public readonly products$: Observable<Product[]> = muteFirst(
+    this.getProducts().pipe(share(), startWith({})),
+    this._products$.asObservable()
+  );
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.productsUrl).pipe(

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from './message.service';
-import { ProductService } from './product.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +9,7 @@ import { ProductService } from './product.service';
 export class AppComponent implements OnInit {
   title = 'AngularMyStoreExample';
 
-  constructor(public messageService: MessageService, private productService: ProductService) {}
+  constructor(public messageService: MessageService) {}
 
-  ngOnInit(): void {
-    this.getProducts();
-  }
-
-  getProducts(): void {
-    this.productService.getProducts().subscribe();
-  }
+  ngOnInit(): void {}
 }
