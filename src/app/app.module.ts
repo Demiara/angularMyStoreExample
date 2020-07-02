@@ -28,16 +28,16 @@ import { CartComponent } from './cart/cart.component';
     CartComponent
   ],
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule,
+    BrowserModule,
     FlexLayoutModule,
-    MatToolbarModule,
+    HttpClientModule,
     MatButtonModule,
-    MatTableModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatTableModule,
+    MatToolbarModule,
+    RouterModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.

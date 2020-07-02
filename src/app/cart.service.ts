@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './product';
 import { CartItem } from './cart-item';
@@ -7,7 +7,7 @@ import { BrowserStorageService } from './storage.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
   private items: CartItem[];
@@ -23,24 +23,40 @@ export class CartService {
   }
 
   addToCart(product: Product): boolean {
-    const foundIndex = this.items.findIndex(i => i.productId === product.id);
-    if (foundIndex === -1) {
+    if (!this.isProductInCart(product)) {
       this.items = [...this.items, { productId: product.id, quantity: 1 }];
     } else {
-      const foundItem = this.items[foundIndex];
-      if (foundItem.quantity >= product.inStock) {
+      const isUpdated = this.updateProductQuantity(product);
+      if (!isUpdated) {
         return false;
       }
-      const itemsClone = this.items.slice();
-      itemsClone.splice(
-        foundIndex,
-        1,
-        { ...foundItem, quantity: foundItem.quantity + 1 },
-      );
-      this.items = itemsClone;
     }
     this.localStorageService.set(this.storeKey, JSON.stringify(this.items));
     this.log(`${product.name} successfully added to cart`);
+    return true;
+  }
+
+  private foundProductIndex(product: Product): number {
+    return this.items.findIndex((i) => i.productId === product.id);
+  }
+
+  private isProductInCart(product: Product): boolean {
+    const foundIndex = this.foundProductIndex(product);
+    return foundIndex !== -1;
+  }
+
+  private updateProductQuantity(product: Product): boolean {
+    const foundIndex = this.foundProductIndex(product);
+    const foundItem = this.items[foundIndex];
+    if (foundItem.quantity >= product.inStock) {
+      return false;
+    }
+    const itemsClone = this.items.slice();
+    itemsClone.splice(foundIndex, 1, {
+      ...foundItem,
+      quantity: foundItem.quantity + 1,
+    });
+    this.items = itemsClone;
     return true;
   }
 
@@ -64,5 +80,4 @@ export class CartService {
   private log(message: string): void {
     this.messageService.add(`CartService: ${message}`);
   }
-
 }

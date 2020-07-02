@@ -3,6 +3,7 @@ import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { CartService } from '../cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -10,26 +11,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  products: Product[];
+  products$: Observable<Product[]>;
   displayedColumns: string[] = ['id', 'name', 'price', 'inStock', 'description', 'buyCol'];
 
-  constructor(private productService: ProductService,
-              private cartService: CartService,
-              private snackBar: MatSnackBar) { }
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+    private snackBar: MatSnackBar,
+  ) {}
 
   ngOnInit(): void {
-    this.getProducts();
-  }
-
-  getProducts(): void {
-    this.productService.getProducts()
-      .subscribe(products => this.products = products);
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
+    this.products$ = this.productService.products$;
   }
 
   addToCart(product: Product) {
@@ -39,5 +31,11 @@ export class ProductListComponent implements OnInit {
     } else {
       this.openSnackBar('The product is out of stock', 'Ok');
     }
+  }
+
+  private openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

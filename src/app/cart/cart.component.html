@@ -1,4 +1,6 @@
-<div class="cart-item" *ngFor="let item of items">
-  <span>{{ item.productId }}</span>
-  <span>{{ item.quantity }}</span>
+<div class="cart-item" *ngFor="let item of cartProducts$ | async; let index = index">
+  <span>Id: {{ item.id }}</span>
+  <span>Name: {{ item.name }}</span>
+  <span>Price: {{ item.price }}</span>
+  <span>Quantity: {{ cartItems[index].quantity }}</span>
 </div>
