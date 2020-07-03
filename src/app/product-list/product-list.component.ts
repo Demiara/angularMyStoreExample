@@ -38,10 +38,11 @@ export class ProductListComponent implements OnInit {
 
   public subscribeToProduct(product: Product): void {
     this.productService.subscribeToProduct(product);
-    // console.log(isSubscriber);
-    // if (isSubscriber) {
-    //   this.openSnackBar('You have successfully subscribed to the notification', 'Ok');
-    // }
+    //this.openSnackBar('You have successfully subscribed to the notification', 'Ok');
+  }
+
+  public disableSubscribeButton(subscribedProduct: SubscribeDialogData[], product: Product) {
+    return subscribedProduct.find(sub => sub.product.id === product.id);
   }
 
   private openSnackBar(message: string, action: string) {
