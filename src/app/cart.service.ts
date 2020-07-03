@@ -18,7 +18,6 @@ export class CartService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private sessionStorageService: BrowserStorageService,
     private localStorageService: BrowserStorageService,
   ) {
     this._cartItems$.next(this.getItems());

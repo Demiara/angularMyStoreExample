@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -8,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,16 +19,17 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
+import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
 import { CartComponent } from './cart/cart.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     ProductListComponent,
-    AddToCartDialogComponent,
-    CartComponent
+    SubscribeDialogComponent,
+    CartComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -37,20 +41,21 @@ import { CartComponent } from './cart/cart.component';
     MatSnackBarModule,
     MatTableModule,
     MatToolbarModule,
+    MatInputModule,
+    FormsModule,
     RouterModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {
-        dataEncapsulation: false,
-        passThruUnknownUrl: true,
-        put204: false // return entity after PUT/update
-      }
-    )
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
+      dataEncapsulation: false,
+      passThruUnknownUrl: true,
+      put204: false, // return entity after PUT/update
+    }),
+    MatFormFieldModule,
   ],
   providers: [],
-  entryComponents: [AddToCartDialogComponent],
-  bootstrap: [AppComponent]
+  entryComponents: [SubscribeDialogComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

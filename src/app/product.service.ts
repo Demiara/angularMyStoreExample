@@ -3,8 +3,12 @@ import { Product } from './product';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 import { catchError, share, startWith, tap } from 'rxjs/operators';
 import { muteFirst } from './utils/api-util';
+import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
+import { BrowserStorageService } from './storage.service';
+import { SubscribeDialogData } from './subscribe-dialog-data';
 
 @Injectable({
   providedIn: 'root',
@@ -14,19 +18,64 @@ export class ProductService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+  private readonly storeKey = 'productSubscribe';
 
   private readonly _products$ = new BehaviorSubject<Product[]>(null);
   public readonly products$: Observable<Product[]> = muteFirst(
     this.getProducts().pipe(share(), startWith({})),
-    this._products$.asObservable()
+    this._products$.asObservable(),
   );
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl).pipe(
-      tap((_) => this.log('fetched products')),
-      tap((product) => this._products$.next(product)),
-      catchError(this.handleError<Product[]>('productsHeroes', [])),
+  private readonly _subscribeProductItems$ = new BehaviorSubject<SubscribeDialogData[]>([]);
+  public readonly subscribeProductItems$ = this._subscribeProductItems$.asObservable();
+
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService,
+    public dialog: MatDialog,
+    private localStorageService: BrowserStorageService,
+  ) {
+    this._subscribeProductItems$.next(this.getSubscribe());
+    this.subscribeProductItems$.subscribe(value =>
+      this.localStorageService.set(this.storeKey, JSON.stringify(value)),
     );
+  }
+
+  public subscribeToProduct(product: Product): void {
+    const dialogRef = this.dialog.open(SubscribeDialogComponent, {
+      width: '350px',
+      data: {
+        name: '',
+        phone: '',
+        product,
+      },
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        tap(result => this.log(`You signed up for ${result.product.name} successfully`)),
+        tap(result =>
+          this._subscribeProductItems$.next([...this._subscribeProductItems$.value, result]),
+        ),
+      )
+      .subscribe();
+  }
+
+  private getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.productsUrl).pipe(
+      tap(_ => this.log('fetched products')),
+      tap(product => this._products$.next(product)),
+      catchError(this.handleError<Product[]>('getProducts', [])),
+    );
+  }
+
+  private getSubscribe(): SubscribeDialogData[] {
+    try {
+      return JSON.parse(this.localStorageService.get(this.storeKey)) || [];
+    } catch (e) {
+      return [];
+    }
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -41,6 +90,4 @@ export class ProductService {
   private log(message: string) {
     this.messageService.add(`ProductService: ${message}`);
   }
-
-  constructor(private http: HttpClient, private messageService: MessageService) {}
 }

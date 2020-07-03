@@ -25,7 +25,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 3,
         name: 'Phone Additional',
         price: 599,
-        inStock: 1,
+        inStock: 0,
         description: 'A great phone for those who like comfort'
       },
       {
@@ -36,6 +36,13 @@ export class InMemoryDataService implements InMemoryDbService {
         description: ''
       }
     ];
-    return {products};
+
+    const orders = [
+      {
+        id: 1,
+        name: 'test'
+      }
+    ];
+    return {products, orders};
   }
 }

@@ -28,9 +28,19 @@
   <ng-container matColumnDef="buyCol">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button *ngIf="element.inStock" (click)="addToCart(element)" mat-raised-button>
-        <i class="material-icons">add_shopping_cart</i>Buy
+      <button *ngIf="element.inStock; else outOfStock"
+              (click)="addToCart(element)"
+              mat-raised-button>
+        <i class="material-icons">add_shopping_cart</i>
+        Add to cart
       </button>
+      <ng-template #outOfStock>
+          <button (click)="subscribeToProduct(element)" mat-raised-button>
+            <i class="material-icons">mail_outline</i>
+            Subscribe
+          </button>
+
+      </ng-template>
     </td>
   </ng-container>
 
