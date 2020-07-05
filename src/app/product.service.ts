@@ -9,6 +9,7 @@ import { muteFirst } from './utils/api-util';
 import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
 import { BrowserStorageService } from './storage.service';
 import { SubscribeDialogData } from './subscribe-dialog-data';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,7 @@ export class ProductService {
     private http: HttpClient,
     private messageService: MessageService,
     public dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private localStorageService: BrowserStorageService,
   ) {
     this._subscribeProductItems$.next(this.getSubscribe());
@@ -57,6 +59,9 @@ export class ProductService {
         tap(result => this.log(`You signed up for ${result.product.name} successfully`)),
         tap(result =>
           this._subscribeProductItems$.next([...this._subscribeProductItems$.value, result]),
+        ),
+        tap(() =>
+          this.openSnackBar('You have successfully subscribed to a product notification', 'Ok'),
         ),
       )
       .subscribe();
@@ -89,5 +94,11 @@ export class ProductService {
 
   private log(message: string) {
     this.messageService.add(`ProductService: ${message}`);
+  }
+
+  private openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

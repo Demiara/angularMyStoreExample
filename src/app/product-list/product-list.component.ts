@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { CartService } from '../cart.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { SubscribeDialogData } from '../subscribe-dialog-data';
 
@@ -19,7 +18,6 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -28,26 +26,14 @@ export class ProductListComponent implements OnInit {
   }
 
   public addToCart(product: Product): void {
-    const isAdd = this.cartService.addToCart(product);
-    if (isAdd) {
-      this.openSnackBar('Product successfully added to cart', 'Ok');
-    } else {
-      this.openSnackBar('The product is out of stock', 'Ok');
-    }
+    this.cartService.addToCart(product);
   }
 
   public subscribeToProduct(product: Product): void {
     this.productService.subscribeToProduct(product);
-    //this.openSnackBar('You have successfully subscribed to the notification', 'Ok');
   }
 
   public disableSubscribeButton(subscribedProduct: SubscribeDialogData[], product: Product) {
     return subscribedProduct.find(sub => sub.product.id === product.id);
-  }
-
-  private openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
   }
 }

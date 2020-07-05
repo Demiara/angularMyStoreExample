@@ -5,6 +5,7 @@ import { CartItem } from './cart-item';
 import { MessageService } from './message.service';
 import { BrowserStorageService } from './storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class CartService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
+    private snackBar: MatSnackBar,
     private localStorageService: BrowserStorageService,
   ) {
     this._cartItems$.next(this.getItems());
@@ -26,17 +28,17 @@ export class CartService {
     );
   }
 
-  public addToCart(product: Product): boolean {
+  public addToCart(product: Product): void {
     if (!this.isProductInCart(product)) {
       this._cartItems$.next([...this._cartItems$.value, { productId: product.id, quantity: 1 }]);
     } else {
-      const isUpdated = this.updateProductQuantity(product);
-      if (!isUpdated) {
-        return false;
+      if (!this.updateProductQuantity(product)) {
+        this.openSnackBar('The product is out of stock', 'Ok');
+        return;
       }
     }
+    this.openSnackBar('Product successfully added to cart', 'Ok');
     this.log(`${product.name} successfully added to cart`);
-    return true;
   }
 
   private foundProductIndex(product: Product): number {
@@ -75,6 +77,7 @@ export class CartService {
     const itemsClone = this._cartItems$.value.slice();
     itemsClone.splice(index, 1);
     this._cartItems$.next(itemsClone);
+    this.openSnackBar('Product successfully removed from cart', 'Ok');
     this.log(`${product.name} successfully removed from cart`);
   }
 
@@ -89,5 +92,11 @@ export class CartService {
 
   private log(message: string): void {
     this.messageService.add(`CartService: ${message}`);
+  }
+
+  private openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }
