@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +22,8 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
 import { CartComponent } from './cart/cart.component';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -30,6 +33,7 @@ import { CartComponent } from './cart/cart.component';
     ProductListComponent,
     SubscribeDialogComponent,
     CartComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -42,6 +46,7 @@ import { CartComponent } from './cart/cart.component';
     MatTableModule,
     MatToolbarModule,
     MatInputModule,
+    MatCardModule,
     FormsModule,
     RouterModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -53,6 +58,7 @@ import { CartComponent } from './cart/cart.component';
       put204: false, // return entity after PUT/update
     }),
     MatFormFieldModule,
+    AppRoutingModule,
   ],
   providers: [],
   entryComponents: [SubscribeDialogComponent],

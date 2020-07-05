@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, share, startWith, tap } from 'rxjs/operators';
+import { catchError, shareReplay, startWith, tap } from 'rxjs/operators';
 import { muteFirst } from './utils/api-util';
 import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
 import { BrowserStorageService } from './storage.service';
@@ -23,7 +23,7 @@ export class ProductService {
 
   private readonly _products$ = new BehaviorSubject<Product[]>(null);
   public readonly products$: Observable<Product[]> = muteFirst(
-    this.getProducts().pipe(share(), startWith({})),
+    this.getProducts().pipe(shareReplay(1), startWith({})),
     this._products$.asObservable(),
   );
 

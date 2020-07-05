@@ -1,11 +1,11 @@
 <mat-toolbar class="app-top-bar">
   <div fxFlex="35%" fxLayout="row" fxLayoutAlign="space-between">
     <h1>My Store</h1>
-    <a mat-raised-button href="#" target="_blank">Products</a>
+    <a [routerLink]="['/']" mat-raised-button href="#">Products</a>
     <a mat-raised-button href="#" target="_blank">Orders</a>
-    <a mat-raised-button href="#" target="_blank">Shipping prices</a>
+    <a mat-raised-button href="#" target="_blank">Subscriptions</a>
   </div>
   <div fxFlex="65%" fxLayout="row" fxLayoutAlign="end">
-    <a mat-raised-button href="#"><i class="material-icons">shopping_cart</i>Cart</a>
+    <a [routerLink]="['/cart']" mat-raised-button href="#"><i class="material-icons">shopping_cart</i>Cart</a>
   </div>
 </mat-toolbar>
