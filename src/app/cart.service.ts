@@ -89,7 +89,7 @@ export class CartService {
         this.log(`Cart has been cleared`);
     }
 
-    getShippingPrices(): Observable<any> {
+    public getShippingPrices(): Observable<any> {
         return this.http.get('/assets/shipping.json');
     }
 

@@ -1,7 +1,10 @@
 <h2 fxLayout="row" fxLayoutAlign="center">Cart</h2>
-<mat-tab-group mat-align-tabs="center">
-    <mat-tab label="Cart">
-        <ng-container *ngIf="cartItems$ | async as cartItems">
+<ng-container *ngIf="cartItems$ | async as cartItems">
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="material-icons">shopping_cart</i> Cart
+            </ng-template>
             <div class="cart-container" fxLayout="row wrap" fxLayoutAlign="space-between">
                 <mat-card
                     *ngFor="let item of cartProducts$ | async; let index = index"
@@ -12,7 +15,7 @@
                     fxFlex.lt-md="100%"
                 >
                     <span>{{ item.name }}</span>
-                    <span>$ {{ item.price }}</span>
+                    <span> {{ item.price | currency }}</span>
                     <span>quantity: {{ cartItems[index].quantity }}</span>
                     <button mat-raised-button (click)="deleteProductFromCart(index, item)">
                         Delete
@@ -26,10 +29,51 @@
                     class="cart-button"
                     (click)="clearCart()"
                 >
+                    <i class="material-icons">clear_all</i>
                     Clear cart
                 </button>
             </div>
-        </ng-container>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="material-icons">attach_money</i> Checkout
+            </ng-template>
+            <div
+                class="order-container"
+                fxLayout="row wrap"
+                fxLayoutAlign="center"
+                *ngIf="cartItems.length; else emptyCart"
+            >
+                <mat-form-field appearance="outline">
+                    <mat-label>Enter your name</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                    <mat-hint>Enter your name</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Enter your phone</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                    <mat-hint>Enter your phone</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose a shipping rate</mat-label>
+                    <mat-select>
+                        <ng-container *ngFor="let shipping of shippingCosts | async">
+                            <mat-option value="{{ shipping.type }}">
+                                {{ shipping.type }} - {{ shipping.price | currency }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Enter your address</mat-label>
+                    <textarea matInput></textarea>
+                </mat-form-field>
+                <button mat-raised-button color="warn" class="cart-button">
+                    <i class="material-icons">shopping_cart</i>
+                    Purchase
+                </button>
+            </div>
+        </mat-tab>
         <ng-template #emptyCart>
             <div class="empty-cart-container">
                 <h2 fxLayout="row" fxLayoutAlign="center">Your cart is empty</h2>
@@ -41,29 +85,5 @@
                 </div>
             </div>
         </ng-template>
-    </mat-tab>
-    <mat-tab label="Checkout">
-        <div class="order-container" fxLayout="row wrap" fxLayoutAlign="center">
-            <mat-form-field appearance="outline" fxLayout="row">
-                <mat-label>Outline form field</mat-label>
-                <input matInput placeholder="Placeholder" />
-                <mat-hint>Hint</mat-hint>
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxLayout="row">
-                <mat-label>Outline form field</mat-label>
-                <input matInput placeholder="Placeholder" />
-                <mat-hint>Hint</mat-hint>
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxLayout="row">
-                <mat-label>Select</mat-label>
-                <mat-select>
-                    <mat-option value="option">Option</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxLayout="row">
-                <mat-label>Textarea</mat-label>
-                <textarea matInput></textarea>
-            </mat-form-field>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+    </mat-tab-group>
+</ng-container>

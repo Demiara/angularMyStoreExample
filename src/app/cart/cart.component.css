@@ -20,7 +20,7 @@ h2 {
     width: 90%;
 }
 .cart-button {
-    margin: 30px;
+    margin: 20px;
 }
 .empty-cart-container {
     margin-top: 15px;
@@ -32,4 +32,5 @@ h2 {
 }
 mat-form-field.mat-form-field {
     width: 100%;
+    margin-top: 15px;
 }
