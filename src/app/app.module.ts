@@ -27,45 +27,44 @@ import { CartComponent } from './cart/cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    TopBarComponent,
-    ProductListComponent,
-    SubscribeDialogComponent,
-    CartComponent,
-    PageNotFoundComponent,
-  ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCardModule,
-    MatTabsModule,
-    FormsModule,
-    RouterModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false,
-      passThruUnknownUrl: true,
-      put204: false, // return entity after PUT/update
-    }),
-    MatFormFieldModule,
-    AppRoutingModule,
-  ],
-  providers: [],
-  entryComponents: [SubscribeDialogComponent],
-  bootstrap: [AppComponent],
+    declarations: [
+        AppComponent,
+        TopBarComponent,
+        ProductListComponent,
+        SubscribeDialogComponent,
+        CartComponent,
+        PageNotFoundComponent,
+    ],
+    imports: [
+        BrowserAnimationsModule,
+        BrowserModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCardModule,
+        MatTabsModule,
+        FormsModule,
+        RouterModule,
+        // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+        // and returns simulated server responses.
+        // Remove it when a real server is ready to receive requests.
+        HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
+            dataEncapsulation: false,
+            passThruUnknownUrl: true,
+            put204: false, // return entity after PUT/update
+        }),
+        MatFormFieldModule,
+        AppRoutingModule,
+    ],
+    providers: [],
+    entryComponents: [SubscribeDialogComponent],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

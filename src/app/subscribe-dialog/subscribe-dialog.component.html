@@ -1,19 +1,19 @@
 <h1 mat-dialog-title>Sign up for a product</h1>
 <div mat-dialog-content>
-  <p>
-    Leave your contacts and we will notify you of the receipt of product
-    <strong>"{{ data.product.name }}"</strong>
-  </p>
-  <mat-form-field>
-    <mat-label>Your Name</mat-label>
-    <input matInput [(ngModel)]="data.name" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Your Phone</mat-label>
-    <input matInput [(ngModel)]="data.phone" />
-  </mat-form-field>
+    <p>
+        Leave your contacts and we will notify you of the receipt of product
+        <strong>"{{ data.product.name }}"</strong>
+    </p>
+    <mat-form-field>
+        <mat-label>Your Name</mat-label>
+        <input matInput [(ngModel)]="data.name" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Your Phone</mat-label>
+        <input matInput [(ngModel)]="data.phone" />
+    </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Send</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Send</button>
 </div>

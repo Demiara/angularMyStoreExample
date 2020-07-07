@@ -3,12 +3,11 @@
 <router-outlet></router-outlet>
 
 <div class="log-container" *ngIf="messageService.messages.length">
-  <h4>Logs:</h4>
+    <h4>Logs:</h4>
     <ul>
-      <li *ngFor="let message of messageService.messages">
-        {{message}}
-      </li>
+        <li *ngFor="let message of messageService.messages">
+            {{ message }}
+        </li>
     </ul>
-  <button mat-stroked-button color="primary"
-          (click)="messageService.clear()">clear</button>
+    <button mat-stroked-button color="primary" (click)="messageService.clear()">clear</button>
 </div>

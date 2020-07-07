@@ -1,15 +1,14 @@
 .card {
-  margin: 10px;
-  background-color: #fafafa;
+    margin: 10px;
+    background-color: #fafafa;
 }
 .card button {
-  color: #1976d2;
+    color: #1976d2;
 }
 .card h2 {
-  color: #1976d2;
-  margin: 0;
-  padding: 10px;
-  font-weight: lighter;
-  font-size: 28px;
+    color: #1976d2;
+    margin: 0;
+    padding: 10px;
+    font-weight: lighter;
+    font-size: 28px;
 }
-

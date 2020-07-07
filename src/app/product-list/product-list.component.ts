@@ -6,34 +6,31 @@ import { Observable } from 'rxjs';
 import { SubscribeDialogData } from '../subscribe-dialog-data';
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css'],
+    selector: 'app-product-list',
+    templateUrl: './product-list.component.html',
+    styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  products$: Observable<Product[]>;
-  subscribeItems$: Observable<SubscribeDialogData[]>;
-  displayedColumns: string[] = ['id', 'name', 'price', 'inStock', 'description', 'buyCol'];
+    products$: Observable<Product[]>;
+    subscribeItems$: Observable<SubscribeDialogData[]>;
+    displayedColumns: string[] = ['id', 'name', 'price', 'inStock', 'description', 'buyCol'];
 
-  constructor(
-    private productService: ProductService,
-    private cartService: CartService,
-  ) {}
+    constructor(private productService: ProductService, private cartService: CartService) {}
 
-  ngOnInit(): void {
-    this.subscribeItems$ = this.productService.subscribeProductItems$;
-    this.products$ = this.productService.products$;
-  }
+    ngOnInit(): void {
+        this.subscribeItems$ = this.productService.subscribeProductItems$;
+        this.products$ = this.productService.products$;
+    }
 
-  public addToCart(product: Product): void {
-    this.cartService.addToCart(product);
-  }
+    public addToCart(product: Product): void {
+        this.cartService.addToCart(product);
+    }
 
-  public subscribeToProduct(product: Product): void {
-    this.productService.subscribeToProduct(product);
-  }
+    public subscribeToProduct(product: Product): void {
+        this.productService.subscribeToProduct(product);
+    }
 
-  public disableSubscribeButton(subscribedProduct: SubscribeDialogData[], product: Product) {
-    return subscribedProduct.find(sub => sub.product.id === product.id);
-  }
+    public disableSubscribeButton(subscribedProduct: SubscribeDialogData[], product: Product) {
+        return subscribedProduct.find(sub => sub.product.id === product.id);
+    }
 }

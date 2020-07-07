@@ -1,35 +1,35 @@
 :host {
-  padding: 10px;
+    padding: 10px;
 }
 h2 {
-  color: #1976d2;
-  margin: 0;
-  padding: 10px;
-  font-weight: lighter;
-  font-size: 28px;
+    color: #1976d2;
+    margin: 0;
+    padding: 10px;
+    font-weight: lighter;
+    font-size: 28px;
 }
 .cart-item {
-  background-color: #1976d2;;
-  margin-top: 15px;
-  color: #ffffff;
-  font-size: 16px;
+    background-color: #1976d2;
+    margin-top: 15px;
+    color: #ffffff;
+    font-size: 16px;
 }
 .cart-container {
-  margin: 0 auto;
-  max-width: 1000px;
-  width: 90%;
+    margin: 0 auto;
+    max-width: 1000px;
+    width: 90%;
 }
 .cart-button {
-  margin: 30px;
+    margin: 30px;
 }
 .empty-cart-container {
-  margin-top: 15px;
+    margin-top: 15px;
 }
 .order-container {
-  margin: 0 auto;
-  max-width: 450px;
-  width: 90%;
+    margin: 0 auto;
+    max-width: 450px;
+    width: 90%;
 }
-mat-form-field.mat-form-field  {
-  width: 100%;
+mat-form-field.mat-form-field {
+    width: 100%;
 }
