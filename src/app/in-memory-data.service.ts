@@ -25,7 +25,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 3,
         name: 'Phone Additional',
         price: 599,
-        inStock: 0,
+        inStock: 2,
         description: 'A great phone for those who like comfort'
       },
       {

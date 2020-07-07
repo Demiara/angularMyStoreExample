@@ -12,8 +12,8 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  cartProducts$: Observable<Product[]>;
-  cartItems$: Observable<CartItem[]>;
+  public cartItems$: Observable<CartItem[]>;
+  private cartProducts$: Observable<Product[]>;
 
   constructor(private productService: ProductService, private cartService: CartService) {}
 

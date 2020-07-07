@@ -1,10 +1,46 @@
-<ng-container *ngIf="cartItems$ | async as cartItems">
-  <div class="cart-item" *ngFor="let item of cartProducts$ | async; let index = index">
-    <span>Id: {{ item.id }}</span>
-    <span>Name: {{ item.name }}</span>
-    <span>Price: {{ item.price }}</span>
-    <span>Quantity: {{ cartItems[index].quantity }}</span>
-    <button mat-raised-button (click)="deleteProductFromCart(index, item)">Delete</button>
-  </div>
-  <button *ngIf="cartItems.length" mat-raised-button (click)="clearCart()">Clear cart</button>
-</ng-container>
+<h2 fxLayout="row" fxLayoutAlign="center">Cart</h2>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Cart">
+    <ng-container *ngIf="cartItems$ | async as cartItems">
+      <div class="cart-container" fxLayout="row wrap" fxLayoutAlign="space-between">
+        <mat-card
+          *ngFor="let item of cartProducts$ | async; let index = index"
+          class="cart-item"
+          fxLayout="row"
+          fxLayoutAlign="space-between"
+          fxFlex="49%"
+          fxFlex.lt-md="100%"
+        >
+          <span>{{ item.name }}</span>
+          <span>$ {{ item.price }}</span>
+          <span>quantity: {{ cartItems[index].quantity }}</span>
+          <button mat-raised-button (click)="deleteProductFromCart(index, item)">Delete</button>
+        </mat-card>
+      </div>
+      <div class="cart-button" fxLayout="row" fxLayoutAlign="center">
+        <button
+          *ngIf="cartItems.length; else emptyCart"
+          mat-raised-button
+          color="warn"
+          (click)="clearCart()"
+        >
+          Clear cart
+        </button>
+      </div>
+    </ng-container>
+    <ng-template #emptyCart>
+      <div class="cart-container">
+        <h2 fxLayout="row" fxLayoutAlign="center">Your cart is empty</h2>
+        <div class="cart-button" fxLayout="row" fxLayoutAlign="center">
+          <a [routerLink]="['/']" mat-raised-button color="warn">
+            <i class="material-icons">keyboard_backspace</i>
+            Back to products
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Checkout">
+    123
+  </mat-tab>
+</mat-tab-group>
