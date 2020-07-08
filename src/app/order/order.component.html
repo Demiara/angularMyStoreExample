@@ -1,0 +1,47 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()" fxLayout="row wrap" fxLayoutAlign="center">
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" placeholder="John Brook" formControlName="userName" required />
+        <mat-hint>Enter the name of the recipient of the order</mat-hint>
+        <mat-error *ngIf="orderForm.get('userName').invalid">{{
+            getRequiredErrorMessage()
+        }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput type="text" placeholder="phone number" formControlName="userPhone" required />
+        <mat-hint>Enter the phone number of the recipient</mat-hint>
+        <mat-error *ngIf="orderForm.get('userPhone').invalid">{{
+            getRequiredErrorMessage()
+        }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Shipping rate</mat-label>
+        <mat-select formControlName="shippingRate" required>
+            <ng-container *ngFor="let shipping of shippingCosts | async">
+                <mat-option value="{{ shipping.type }}">
+                    {{ shipping.type }} - {{ shipping.price | currency }}
+                </mat-option>
+            </ng-container>
+        </mat-select>
+        <mat-hint>Choose your shopping rate</mat-hint>
+        <mat-error *ngIf="orderForm.get('shippingRate').invalid">{{
+            getRequiredErrorMessage()
+            }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea matInput formControlName="userAddress"></textarea>
+        <mat-hint>Enter your address</mat-hint>
+    </mat-form-field>
+    <button
+        mat-raised-button
+        color="warn"
+        class="order-button"
+        type="submit"
+        [disabled]="!orderForm.valid"
+    >
+        <i class="material-icons">shopping_cart</i>
+        Purchase
+    </button>
+</form>

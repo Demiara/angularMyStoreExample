@@ -13,7 +13,6 @@ import { filter, map } from 'rxjs/operators';
 })
 export class CartComponent implements OnInit {
     public cartItems$: Observable<CartItem[]>;
-    public shippingCosts: Observable<any>;
     private cartProducts$: Observable<Product[]>;
 
     constructor(private productService: ProductService, private cartService: CartService) {}
@@ -21,7 +20,6 @@ export class CartComponent implements OnInit {
     ngOnInit(): void {
         this.setCartProducts();
         this.cartItems$ = this.cartService.cartItems$;
-        this.shippingCosts = this.cartService.getShippingPrices();
     }
 
     private setCartProducts() {

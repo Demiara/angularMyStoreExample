@@ -38,40 +38,8 @@
             <ng-template mat-tab-label>
                 <i class="material-icons">attach_money</i> Checkout
             </ng-template>
-            <div
-                class="order-container"
-                fxLayout="row wrap"
-                fxLayoutAlign="center"
-                *ngIf="cartItems.length; else emptyCart"
-            >
-                <mat-form-field appearance="outline">
-                    <mat-label>Enter your name</mat-label>
-                    <input matInput placeholder="Placeholder" />
-                    <mat-hint>Enter your name</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Enter your phone</mat-label>
-                    <input matInput placeholder="Placeholder" />
-                    <mat-hint>Enter your phone</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Choose a shipping rate</mat-label>
-                    <mat-select>
-                        <ng-container *ngFor="let shipping of shippingCosts | async">
-                            <mat-option value="{{ shipping.type }}">
-                                {{ shipping.type }} - {{ shipping.price | currency }}
-                            </mat-option>
-                        </ng-container>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Enter your address</mat-label>
-                    <textarea matInput></textarea>
-                </mat-form-field>
-                <button mat-raised-button color="warn" class="cart-button">
-                    <i class="material-icons">shopping_cart</i>
-                    Purchase
-                </button>
+            <div class="order-container" *ngIf="cartItems.length; else emptyCart">
+                <app-order></app-order>
             </div>
         </mat-tab>
         <ng-template #emptyCart>

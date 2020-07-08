@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,6 +26,7 @@ import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.co
 import { CartComponent } from './cart/cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
         SubscribeDialogComponent,
         CartComponent,
         PageNotFoundComponent,
+        OrderComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -50,6 +52,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
         MatSelectModule,
         MatCardModule,
         MatTabsModule,
+        ReactiveFormsModule,
         FormsModule,
         RouterModule,
         // The HttpClientInMemoryWebApiModule module intercepts HTTP requests

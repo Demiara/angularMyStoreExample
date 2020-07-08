@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from './product';
 import { CartItem } from './cart-item';
 import { MessageService } from './message.service';
@@ -44,6 +44,19 @@ export class CartService {
         this.log(`${product.name} successfully added to cart`);
     }
 
+    public deleteProductFromCart(index: number, product: Product): void {
+        const itemsClone = this._cartItems$.value.slice();
+        itemsClone.splice(index, 1);
+        this._cartItems$.next(itemsClone);
+        this.openSnackBar('Product successfully removed from cart', 'Ok');
+        this.log(`${product.name} successfully removed from cart`);
+    }
+
+    public clearCart(): void {
+        this._cartItems$.next([]);
+        this.log(`Cart has been cleared`);
+    }
+
     private foundProductIndex(product: Product): number {
         return this._cartItems$.value.findIndex(i => i.productId === product.id);
     }
@@ -74,23 +87,6 @@ export class CartService {
         } catch (e) {
             return [];
         }
-    }
-
-    public deleteProductFromCart(index: number, product: Product): void {
-        const itemsClone = this._cartItems$.value.slice();
-        itemsClone.splice(index, 1);
-        this._cartItems$.next(itemsClone);
-        this.openSnackBar('Product successfully removed from cart', 'Ok');
-        this.log(`${product.name} successfully removed from cart`);
-    }
-
-    public clearCart(): void {
-        this._cartItems$.next([]);
-        this.log(`Cart has been cleared`);
-    }
-
-    public getShippingPrices(): Observable<any> {
-        return this.http.get('/assets/shipping.json');
     }
 
     private log(message: string): void {

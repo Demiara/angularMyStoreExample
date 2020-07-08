@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError, shareReplay, startWith, tap } from 'rxjs/operators';
 import { muteFirst } from './utils/api-util';
+import { handleError } from './utils/api-util';
 import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
 import { BrowserStorageService } from './storage.service';
 import { SubscribeDialogData } from './subscribe-dialog-data';
@@ -77,7 +78,7 @@ export class ProductService {
         return this.http.get<Product[]>(this.productsUrl).pipe(
             tap(_ => this.log('fetched products')),
             tap(product => this._products$.next(product)),
-            catchError(this.handleError<Product[]>('getProducts', [])),
+            catchError(handleError<Product[]>('getProducts', [])),
         );
     }
 
@@ -87,15 +88,6 @@ export class ProductService {
         } catch (e) {
             return [];
         }
-    }
-
-    private handleError<T>(operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-            console.error(error); // log to console instead
-            this.log(`${operation} failed: ${error.message}`);
-            // Let the app keep running by returning an empty result.
-            return of(result as T);
-        };
     }
 
     private log(message: string) {

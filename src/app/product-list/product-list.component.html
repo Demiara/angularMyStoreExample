@@ -12,11 +12,11 @@
 
     <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef>Price</th>
-        <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
     </ng-container>
 
     <ng-container matColumnDef="inStock">
-        <th mat-header-cell *matHeaderCellDef>inStock</th>
+        <th mat-header-cell *matHeaderCellDef>In stock</th>
         <td mat-cell *matCellDef="let element">{{ element.inStock }}</td>
     </ng-container>
 
