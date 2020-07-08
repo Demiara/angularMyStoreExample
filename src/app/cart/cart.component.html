@@ -22,6 +22,9 @@
                     </button>
                 </mat-card>
             </div>
+            <div *ngIf="totalPrice$ | async as totalPrice" fxLayout="row" fxLayoutAlign="center">
+                <h3>Total price: {{ totalPrice | currency }}</h3>
+            </div>
             <div class="cart-container" fxLayout="row" fxLayoutAlign="center">
                 <button
                     *ngIf="cartItems.length; else emptyCart"

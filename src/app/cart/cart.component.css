@@ -8,6 +8,11 @@ h2 {
     font-weight: lighter;
     font-size: 28px;
 }
+h3 {
+    margin: 0;
+    padding: 15px;
+    font-size: 18px;
+}
 .cart-item {
     background-color: #1976d2;
     margin-top: 15px;

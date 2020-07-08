@@ -4,7 +4,7 @@ import { CartItem } from '../cart-item';
 import { ProductService } from '../product.service';
 import { combineLatest, Observable } from 'rxjs';
 import { Product } from '../product';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 
 @Component({
     selector: 'app-cart',
@@ -13,20 +13,27 @@ import { filter, map } from 'rxjs/operators';
 })
 export class CartComponent implements OnInit {
     public cartItems$: Observable<CartItem[]>;
-    private cartProducts$: Observable<Product[]>;
+    public totalPrice$: Observable<number>;
+    public cartProducts$: Observable<Product[]>;
 
     constructor(private productService: ProductService, private cartService: CartService) {}
 
     ngOnInit(): void {
-        this.setCartProducts();
         this.cartItems$ = this.cartService.cartItems$;
+        this.setCartProducts();
+        this.setTotalPrice();
+    }
+
+    public deleteProductFromCart(index: number, product: Product): void {
+        this.cartService.deleteProductFromCart(index, product);
+    }
+
+    public clearCart(): void {
+        this.cartService.clearCart();
     }
 
     private setCartProducts() {
-        this.cartProducts$ = combineLatest([
-            this.productService.products$,
-            this.cartService.cartItems$,
-        ]).pipe(
+        this.cartProducts$ = combineLatest([this.productService.products$, this.cartItems$]).pipe(
             filter(([products]) => Boolean(products)),
             map(([products, cartItems]) => this.cartItemsToProducts(products, cartItems)),
         );
@@ -38,11 +45,17 @@ export class CartComponent implements OnInit {
         });
     }
 
-    public deleteProductFromCart(index: number, product: Product): void {
-        this.cartService.deleteProductFromCart(index, product);
+    private setTotalPrice() {
+        this.totalPrice$ = this.cartProducts$.pipe(
+            withLatestFrom(this.cartItems$),
+            map(([products, cartItems]) => this.getTotalPrice(products, cartItems)),
+        );
     }
 
-    public clearCart(): void {
-        this.cartService.clearCart();
+    private getTotalPrice(products: Product[], cartItems: CartItem[]): number {
+        return cartItems.reduce(
+            (total, cartItem, index) => total + cartItem.quantity * products[index].price,
+            0,
+        );
     }
 }
