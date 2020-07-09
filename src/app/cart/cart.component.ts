@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { CartItem } from '../cart-item';
-import { combineLatest, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Product } from '../product';
-import { filter, map, withLatestFrom } from 'rxjs/operators';
 
 @Component({
     selector: 'app-cart',
@@ -12,7 +11,7 @@ import { filter, map, withLatestFrom } from 'rxjs/operators';
 })
 export class CartComponent implements OnInit {
     public cartItems$: Observable<CartItem[]>;
-    public totalPrice$: Observable<number>;
+    public orderPrice$: Observable<number>;
     public cartProducts$: Observable<Product[]>;
 
     constructor(private cartService: CartService) {}
@@ -21,8 +20,8 @@ export class CartComponent implements OnInit {
         this.cartItems$ = this.cartService.cartItems$;
         this.setCartProducts();
         this.cartProducts$ = this.cartService.cartProducts$;
-        this.setTotalPrice();
-        this.totalPrice$ = this.cartService.totalPrice$;
+        this.setOrderPrice();
+        this.orderPrice$ = this.cartService.orderPrice$;
     }
 
     public deleteProductFromCart(index: number, product: Product): void {
@@ -37,7 +36,7 @@ export class CartComponent implements OnInit {
         this.cartService.setCartProducts();
     }
 
-    private setTotalPrice() {
-        this.cartService.setTotalPrice();
+    private setOrderPrice() {
+        this.cartService.setOrderPrice();
     }
 }

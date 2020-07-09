@@ -19,7 +19,7 @@ export class CartService {
     public readonly cartItems$: Observable<CartItem[]> = this._cartItems$.asObservable();
 
     public cartProducts$: Observable<Product[]>;
-    public totalPrice$: Observable<number>;
+    public orderPrice$: Observable<number>;
 
     constructor(
         private http: HttpClient,
@@ -70,8 +70,8 @@ export class CartService {
         );
     }
 
-    public setTotalPrice() {
-        this.totalPrice$ = this.cartProducts$.pipe(
+    public setOrderPrice() {
+        this.orderPrice$ = this.cartProducts$.pipe(
             withLatestFrom(this.cartItems$),
             map(([products, cartItems]) => this.getTotalPrice(products, cartItems)),
         );
