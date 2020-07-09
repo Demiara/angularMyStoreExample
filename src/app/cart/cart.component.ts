@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { CartItem } from '../cart-item';
-import { ProductService } from '../product.service';
 import { combineLatest, Observable } from 'rxjs';
 import { Product } from '../product';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
@@ -16,12 +15,14 @@ export class CartComponent implements OnInit {
     public totalPrice$: Observable<number>;
     public cartProducts$: Observable<Product[]>;
 
-    constructor(private productService: ProductService, private cartService: CartService) {}
+    constructor(private cartService: CartService) {}
 
     ngOnInit(): void {
         this.cartItems$ = this.cartService.cartItems$;
         this.setCartProducts();
+        this.cartProducts$ = this.cartService.cartProducts$;
         this.setTotalPrice();
+        this.totalPrice$ = this.cartService.totalPrice$;
     }
 
     public deleteProductFromCart(index: number, product: Product): void {
@@ -33,29 +34,10 @@ export class CartComponent implements OnInit {
     }
 
     private setCartProducts() {
-        this.cartProducts$ = combineLatest([this.productService.products$, this.cartItems$]).pipe(
-            filter(([products]) => Boolean(products)),
-            map(([products, cartItems]) => this.cartItemsToProducts(products, cartItems)),
-        );
-    }
-
-    private cartItemsToProducts(products: Product[], cartItems: CartItem[]): Product[] {
-        return cartItems.map(item => {
-            return products.find(product => product.id === item.productId);
-        });
+        this.cartService.setCartProducts();
     }
 
     private setTotalPrice() {
-        this.totalPrice$ = this.cartProducts$.pipe(
-            withLatestFrom(this.cartItems$),
-            map(([products, cartItems]) => this.getTotalPrice(products, cartItems)),
-        );
-    }
-
-    private getTotalPrice(products: Product[], cartItems: CartItem[]): number {
-        return cartItems.reduce(
-            (total, cartItem, index) => total + cartItem.quantity * products[index].price,
-            0,
-        );
+        this.cartService.setTotalPrice();
     }
 }

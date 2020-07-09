@@ -4,8 +4,10 @@ import { Product } from './product';
 import { CartItem } from './cart-item';
 import { MessageService } from './message.service';
 import { BrowserStorageService } from './storage.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
+import { ProductService } from './product.service';
 
 @Injectable({
     providedIn: 'root',
@@ -16,8 +18,12 @@ export class CartService {
     private readonly _cartItems$ = new BehaviorSubject<CartItem[]>([]);
     public readonly cartItems$: Observable<CartItem[]> = this._cartItems$.asObservable();
 
+    public cartProducts$: Observable<Product[]>;
+    public totalPrice$: Observable<number>;
+
     constructor(
         private http: HttpClient,
+        private productService: ProductService,
         private messageService: MessageService,
         private snackBar: MatSnackBar,
         private localStorageService: BrowserStorageService,
@@ -57,6 +63,20 @@ export class CartService {
         this.log(`Cart has been cleared`);
     }
 
+    public setCartProducts() {
+        this.cartProducts$ = combineLatest([this.productService.products$, this.cartItems$]).pipe(
+            filter(([products]) => Boolean(products)),
+            map(([products, cartItems]) => this.cartItemsToProducts(products, cartItems)),
+        );
+    }
+
+    public setTotalPrice() {
+        this.totalPrice$ = this.cartProducts$.pipe(
+            withLatestFrom(this.cartItems$),
+            map(([products, cartItems]) => this.getTotalPrice(products, cartItems)),
+        );
+    }
+
     private foundProductIndex(product: Product): number {
         return this._cartItems$.value.findIndex(i => i.productId === product.id);
     }
@@ -87,6 +107,19 @@ export class CartService {
         } catch (e) {
             return [];
         }
+    }
+
+    private cartItemsToProducts(products: Product[], cartItems: CartItem[]): Product[] {
+        return cartItems.map(item => {
+            return products.find(product => product.id === item.productId);
+        });
+    }
+
+    private getTotalPrice(products: Product[], cartItems: CartItem[]): number {
+        return cartItems.reduce(
+            (total, cartItem, index) => total + cartItem.quantity * products[index].price,
+            0,
+        );
     }
 
     private log(message: string): void {
