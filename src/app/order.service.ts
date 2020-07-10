@@ -3,8 +3,10 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from './order';
 import { MessageService } from './message.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { handleError } from './utils/api-util';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BrowserStorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root',
@@ -15,15 +17,37 @@ export class OrderService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
 
-    constructor(private http: HttpClient, private messageService: MessageService) {}
+    constructor(
+        private http: HttpClient,
+        private messageService: MessageService,
+        private snackBar: MatSnackBar,
+        private localStorageService: BrowserStorageService,
+    ) {}
 
     public getShippingPrices(): Observable<any> {
         return this.http.get('/assets/shipping.json');
     }
 
     public addOrder(order: Order): Observable<Order> {
-        return this.http
-            .post<Order>(this.ordersUrl, order, this.httpOptions)
-            .pipe(catchError(handleError('addOrder', order)));
+        return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
+            tap((newOrder: Order) => this.log(`Added order w/ id=${newOrder.id}`)),
+            tap(() =>
+                this.openSnackBar(
+                    'Your order has been successfully сreated',
+                    'Ok',
+                ),
+            ),
+            catchError(handleError('addOrder', order)),
+        );
+    }
+
+    private log(message: string): void {
+        this.messageService.add(`OrderService: ${message}`);
+    }
+
+    private openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+            duration: 10000,
+        });
     }
 }

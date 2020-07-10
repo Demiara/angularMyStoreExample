@@ -6,6 +6,7 @@ import { CartService } from '../cart.service';
 import { Unsubscribe } from '../utils/unsubscribe.mixin';
 import { debounceTime, map, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Shipping } from '../shipping';
+import { Order } from '../order';
 
 @Component({
     selector: 'app-order',
@@ -22,7 +23,7 @@ export class OrderComponent extends Unsubscribe(Object) implements OnInit, OnDes
         shipping: new FormControl('', Validators.required),
         userAddress: new FormControl(''),
         orderPrice: new FormControl('', Validators.required),
-        productsId: new FormControl({ value: [] }, Validators.required),
+        orderProducts: new FormControl({ value: [] }, Validators.required),
     });
 
     constructor(private orderService: OrderService, private cartService: CartService) {
@@ -33,6 +34,7 @@ export class OrderComponent extends Unsubscribe(Object) implements OnInit, OnDes
         this.shippingCosts$ = this.orderService.getShippingPrices();
         this.getOrderPrice();
         this.setTotalPrice();
+        this.getCartProducts();
     }
 
     public ngOnDestroy() {
@@ -40,8 +42,9 @@ export class OrderComponent extends Unsubscribe(Object) implements OnInit, OnDes
     }
 
     public onSubmit() {
-        // TODO: Use EventEmitter with form value
-        console.warn(this.orderForm.value);
+        const totalOrder: Order = this.orderForm.value;
+        this.orderService.addOrder(totalOrder).subscribe(order => console.log(order));
+        this.cartService.clearCart();
     }
 
     public getRequiredErrorMessage() {
@@ -74,4 +77,11 @@ export class OrderComponent extends Unsubscribe(Object) implements OnInit, OnDes
         return shippingItem.price;
     }
 
+    private getCartProducts() {
+        this.cartService.cartItems$.pipe(takeUntil(this.unsubscribe$)).subscribe(cartItems =>
+            this.orderForm.patchValue({
+                orderProducts: cartItems,
+            }),
+        );
+    }
 }

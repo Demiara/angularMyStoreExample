@@ -1,3 +1,5 @@
+import { CartItem } from './cart-item';
+
 export interface Order {
     id?: number;
     userName: string;
@@ -5,5 +7,5 @@ export interface Order {
     userAddress?: string;
     orderPrice: number;
     shipping: number;
-    productsId: number[];
+    orderProducts: CartItem[];
 }
