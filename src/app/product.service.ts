@@ -17,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProductService {
     private productsUrl = 'api/products'; // URL to web api
-    httpOptions = {
+    private httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
     private readonly storeKey = 'productSubscribe';

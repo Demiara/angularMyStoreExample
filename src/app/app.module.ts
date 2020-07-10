@@ -27,6 +27,7 @@ import { CartComponent } from './cart/cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OrderComponent } from './order/order.component';
+import { OrderListComponent } from './order-list/order-list.component';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { OrderComponent } from './order/order.component';
         CartComponent,
         PageNotFoundComponent,
         OrderComponent,
+        OrderListComponent,
     ],
     imports: [
         BrowserAnimationsModule,

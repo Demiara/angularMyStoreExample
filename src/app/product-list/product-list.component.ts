@@ -11,13 +11,13 @@ import { SubscribeDialogData } from '../subscribe-dialog-data';
     styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-    products$: Observable<Product[]>;
-    subscribeItems$: Observable<SubscribeDialogData[]>;
-    displayedColumns: string[] = ['id', 'name', 'price', 'inStock', 'description', 'buyCol'];
+    public products$: Observable<Product[]>;
+    public subscribeItems$: Observable<SubscribeDialogData[]>;
+    public displayedColumns: string[] = ['id', 'name', 'price', 'inStock', 'description', 'buyCol'];
 
     constructor(private productService: ProductService, private cartService: CartService) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.subscribeItems$ = this.productService.subscribeProductItems$;
         this.products$ = this.productService.products$;
     }

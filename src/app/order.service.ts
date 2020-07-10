@@ -6,7 +6,6 @@ import { MessageService } from './message.service';
 import { catchError, tap } from 'rxjs/operators';
 import { handleError } from './utils/api-util';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BrowserStorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root',
@@ -21,7 +20,6 @@ export class OrderService {
         private http: HttpClient,
         private messageService: MessageService,
         private snackBar: MatSnackBar,
-        private localStorageService: BrowserStorageService,
     ) {}
 
     public getShippingPrices(): Observable<any> {
@@ -38,6 +36,13 @@ export class OrderService {
                 ),
             ),
             catchError(handleError('addOrder', order)),
+        );
+    }
+
+    public getOrders(): Observable<Order[]> {
+        return this.http.get<Order[]>(this.ordersUrl).pipe(
+            tap(_ => this.log('fetched orders')),
+            catchError(handleError<Order[]>('getOrders', [])),
         );
     }
 
