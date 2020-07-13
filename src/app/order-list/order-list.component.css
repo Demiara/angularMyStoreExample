@@ -1,0 +1,26 @@
+:host {
+    padding: 10px;
+    max-width: 1000px;
+}
+h2 {
+    color: #1976d2;
+    margin: 0;
+    padding: 10px;
+    font-weight: lighter;
+    font-size: 28px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    grid-auto-rows: auto;
+    justify-content: center;
+}
+.gridItem {
+    background-color: #1976d2;
+    color: #ffffff;
+    font-size: 18px;
+    margin: 20px;
+}
+.orderProduct {
+    padding: 10px;
+}

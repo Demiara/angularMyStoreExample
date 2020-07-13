@@ -56,6 +56,28 @@ export class InMemoryDataService implements InMemoryDbService {
                     },
                 ],
             },
+            {
+                id: 2,
+                userName: 'Mike Brook',
+                userPhone: '7365435454',
+                userAddress: '',
+                orderPrice: 999,
+                shipping: 3,
+                orderProducts: [
+                    {
+                        productId: 3,
+                        quantity: 1,
+                    },
+                    {
+                        productId: 4,
+                        quantity: 2,
+                    },
+                    {
+                        productId: 1,
+                        quantity: 1,
+                    },
+                ],
+            },
         ];
         return { products, orders };
     }

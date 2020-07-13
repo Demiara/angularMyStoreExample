@@ -1,3 +1,33 @@
-<div *ngFor="let order of orders">
-    {{ order | json }}
+<h2 fxLayout="row" fxLayoutAlign="center">Orders</h2>
+<div class="grid">
+    <mat-card *ngFor="let order of orders" class="gridItem">
+        <div>
+            Name: <strong>{{ order.userName }}</strong>
+        </div>
+        <div>
+            Phone: <strong>{{ order.userPhone }}</strong>
+        </div>
+        <div *ngIf="order.userAddress">
+            Address: <strong>{{ order.userAddress }}</strong>
+        </div>
+        <br />
+        <div>
+            Products:
+            <div *ngFor="let orderProd of order.orderProducts" class="orderProduct">
+                Product name: <strong>{{ getOrderProductName(orderProd.productId) }}</strong
+                ><br />
+                Product quantity: <strong>{{ orderProd.quantity }}</strong>
+            </div>
+        </div>
+        <div>
+            Shipping:
+            <strong>{{ getOrderShippingCost(order.shipping, 'name') }}</strong>
+        </div>
+        <div>
+            Total price:
+            <strong>{{
+                getOrderShippingCost(order.shipping) + order.orderPrice | currency
+            }}</strong>
+        </div>
+    </mat-card>
 </div>
