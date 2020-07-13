@@ -32,4 +32,9 @@ export class OrderListComponent implements OnInit {
         const shippingCost = this.shippings.find(shipping => shipping.id === id);
         return type === 'name' ? shippingCost.type : shippingCost.price;
     }
+
+    public deleteOrder(order: Order) {
+        this.orders = this.orders.filter(h => h !== order);
+        this.orderService.deleteOrder(order).subscribe();
+    }
 }

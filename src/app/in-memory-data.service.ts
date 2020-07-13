@@ -72,10 +72,6 @@ export class InMemoryDataService implements InMemoryDbService {
                         productId: 4,
                         quantity: 2,
                     },
-                    {
-                        productId: 1,
-                        quantity: 1,
-                    },
                 ],
             },
         ];

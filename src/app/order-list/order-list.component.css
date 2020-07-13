@@ -24,3 +24,8 @@ h2 {
 .orderProduct {
     padding: 10px;
 }
+
+.deleteButton {
+    margin-top: 15px;
+    width: 100%;
+}

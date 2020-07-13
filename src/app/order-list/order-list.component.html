@@ -1,6 +1,6 @@
 <h2 fxLayout="row" fxLayoutAlign="center">Orders</h2>
-<div class="grid">
-    <mat-card *ngFor="let order of orders" class="gridItem">
+<div *ngIf="orders" class="grid">
+    <mat-card *ngFor="let order of orders; let index = index" class="gridItem">
         <div>
             Name: <strong>{{ order.userName }}</strong>
         </div>
@@ -11,7 +11,7 @@
             Address: <strong>{{ order.userAddress }}</strong>
         </div>
         <br />
-        <div>
+        <div *ngIf="products">
             Products:
             <div *ngFor="let orderProd of order.orderProducts" class="orderProduct">
                 Product name: <strong>{{ getOrderProductName(orderProd.productId) }}</strong
@@ -19,7 +19,7 @@
                 Product quantity: <strong>{{ orderProd.quantity }}</strong>
             </div>
         </div>
-        <div>
+        <div *ngIf="shippings">
             Shipping:
             <strong>{{ getOrderShippingCost(order.shipping, 'name') }}</strong>
         </div>
@@ -29,5 +29,8 @@
                 getOrderShippingCost(order.shipping) + order.orderPrice | currency
             }}</strong>
         </div>
+        <button class="deleteButton" mat-raised-button (click)="deleteOrder(order)">
+            Delete
+        </button>
     </mat-card>
 </div>

@@ -29,12 +29,7 @@ export class OrderService {
     public addOrder(order: Order): Observable<Order> {
         return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
             tap((newOrder: Order) => this.log(`Added order w/ id=${newOrder.id}`)),
-            tap(() =>
-                this.openSnackBar(
-                    'Your order has been successfully сreated',
-                    'Ok',
-                ),
-            ),
+            tap(() => this.openSnackBar('Your order has been successfully сreated', 'Ok')),
             catchError(handleError('addOrder', order)),
         );
     }
@@ -43,6 +38,16 @@ export class OrderService {
         return this.http.get<Order[]>(this.ordersUrl).pipe(
             tap(_ => this.log('fetched orders')),
             catchError(handleError<Order[]>('getOrders', [])),
+        );
+    }
+
+    public deleteOrder(order: Order | number): Observable<Order> {
+        const id = typeof order === 'number' ? order : order.id;
+        const url = `${this.ordersUrl}/${id}`;
+        return this.http.delete<Order>(url, this.httpOptions).pipe(
+            tap(_ => this.log(`deleted order id=${id}`)),
+            tap(() => this.openSnackBar('Your order has been successfully removed', 'Ok')),
+            catchError(handleError<Order>('deleteOrder')),
         );
     }
 
