@@ -1,6 +1,6 @@
 <h2 fxLayout="row" fxLayoutAlign="center">Orders</h2>
 <div *ngIf="orders" class="grid">
-    <mat-card *ngFor="let order of orders; let index = index" class="gridItem" fxFlex.lt-md="100%">
+    <mat-card *ngFor="let order of orders" class="gridItem" fxFlex.lt-md="100%">
         <h3 fxLayout="row" fxLayoutAlign="center">Order # {{ order.id }}</h3>
         <div>
             Name: <strong>{{ order.userName }}</strong>
@@ -12,24 +12,6 @@
             Address: <strong>{{ order.userAddress }}</strong>
         </div>
         <br />
-<!--        <div *ngIf="products">-->
-<!--            Products:-->
-<!--            <div *ngFor="let orderProd of order.orderProducts" class="orderProduct">-->
-<!--                Product name: <strong>{{ getOrderProductName(orderProd.productId) }}</strong-->
-<!--                ><br />-->
-<!--                Product quantity: <strong>{{ orderProd.quantity }}</strong>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div *ngIf="shippings">-->
-<!--            Shipping:-->
-<!--            <strong>{{ getOrderShippingCost(order.shipping, 'name') }}</strong>-->
-<!--        </div>-->
-        <div *ngIf="shippings">
-            Total price:
-            <strong>{{
-                getOrderShippingCost(order.shipping) + order.orderPrice | currency
-            }}</strong>
-        </div>
         <button
             *ngIf="order.canceled"
             class="deleteButton"

@@ -3,14 +3,20 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from './order';
 import { MessageService } from './message.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { handleError } from './utils/api-util';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Product } from './product';
+import { Shipping } from './shipping';
+import { ProductService } from './product.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrderService {
+    public products: Product[];
+    public shippings: Shipping[];
+
     private ordersUrl = 'api/orders'; // URL to web api
     private httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,9 +24,13 @@ export class OrderService {
 
     constructor(
         private http: HttpClient,
+        private productService: ProductService,
         private messageService: MessageService,
         private snackBar: MatSnackBar,
-    ) {}
+    ) {
+        this.productService.products$.subscribe(products => (this.products = products));
+        this.getShippingPrices().subscribe(shippings => (this.shippings = shippings));
+    }
 
     public getShippingPrices(): Observable<any> {
         return this.http.get('/assets/shipping.json');
@@ -29,7 +39,7 @@ export class OrderService {
     public addOrder(order: Order): Observable<Order> {
         return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
             tap((newOrder: Order) => this.log(`Added order w/ id=${newOrder.id}`)),
-            tap(() => this.openSnackBar('Your order-form has been successfully сreated', 'Ok')),
+            tap(() => this.openSnackBar('Your order has been successfully сreated', 'Ok')),
             catchError(handleError('addOrder', order)),
         );
     }
@@ -40,15 +50,30 @@ export class OrderService {
             catchError(handleError<Order[]>('getOrders', [])),
         );
     }
+    public getOrder(id: number | string) {
+        return this.getOrders().pipe(
+            map((orders: Order[]) => orders.find(order => order.id === +id)),
+        );
+    }
 
     public deleteOrder(order: Order | number): Observable<Order> {
         const id = typeof order === 'number' ? order : order.id;
         const url = `${this.ordersUrl}/${id}`;
         return this.http.delete<Order>(url, this.httpOptions).pipe(
             tap(_ => this.log(`deleted order id=${id}`)),
-            tap(() => this.openSnackBar('Your order-form has been successfully removed', 'Ok')),
+            tap(() => this.openSnackBar('Your order has been successfully removed', 'Ok')),
             catchError(handleError<Order>('deleteOrder')),
         );
+    }
+
+    public getOrderProductName(id: number): string {
+        const currentProduct = this.products.find(product => product.id === id);
+        return currentProduct.name;
+    }
+
+    public getOrderShippingCost(id: number | string, type?: string): number | string {
+        const shippingCost = this.shippings.find(shipping => shipping.id === +id);
+        return type === 'name' ? shippingCost.type : shippingCost.price;
     }
 
     private log(message: string): void {
