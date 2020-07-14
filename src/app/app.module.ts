@@ -26,8 +26,9 @@ import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.co
 import { CartComponent } from './cart/cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { OrderComponent } from './order/order.component';
+import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 @NgModule({
     declarations: [
@@ -37,8 +38,9 @@ import { OrderListComponent } from './order-list/order-list.component';
         SubscribeDialogComponent,
         CartComponent,
         PageNotFoundComponent,
-        OrderComponent,
+        OrderFormComponent,
         OrderListComponent,
+        OrderDetailComponent,
     ],
     imports: [
         BrowserAnimationsModule,

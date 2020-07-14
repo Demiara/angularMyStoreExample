@@ -33,7 +33,7 @@ export class OrderListComponent implements OnInit {
         return type === 'name' ? shippingCost.type : shippingCost.price;
     }
 
-    public deleteOrder(order: Order) {
+    public cancelOrder(order: Order) {
         this.orders = this.orders.filter(h => h !== order);
         this.orderService.deleteOrder(order).subscribe();
     }

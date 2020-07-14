@@ -4,16 +4,16 @@ import { combineLatest, Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../cart.service';
 import { Unsubscribe } from '../utils/unsubscribe.mixin';
-import { debounceTime, map, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { map, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Shipping } from '../shipping';
 import { Order } from '../order';
 
 @Component({
-    selector: 'app-order',
-    templateUrl: './order.component.html',
-    styleUrls: ['./order.component.css'],
+    selector: 'app-order-form',
+    templateUrl: './order-form.component.html',
+    styleUrls: ['./order-form.component.css'],
 })
-export class OrderComponent extends Unsubscribe(Object) implements OnInit, OnDestroy {
+export class OrderFormComponent extends Unsubscribe(Object) implements OnInit, OnDestroy {
     public shippingCosts$: Observable<Shipping[]>;
     public totalPrice$: Observable<number>;
 
@@ -24,6 +24,7 @@ export class OrderComponent extends Unsubscribe(Object) implements OnInit, OnDes
         userAddress: new FormControl(''),
         orderPrice: new FormControl('', Validators.required),
         orderProducts: new FormControl({ value: [] }, Validators.required),
+        canceled: new FormControl(false),
     });
 
     constructor(private orderService: OrderService, private cartService: CartService) {

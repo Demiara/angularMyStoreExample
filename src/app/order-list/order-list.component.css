@@ -9,6 +9,10 @@ h2 {
     font-weight: lighter;
     font-size: 28px;
 }
+h3 {
+    font-weight: bold;
+    font-size: 18px;
+}
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 350px);
@@ -28,4 +32,8 @@ h2 {
 .deleteButton {
     margin-top: 15px;
     width: 100%;
+}
+
+.order-button {
+    margin-top: 15px;
 }

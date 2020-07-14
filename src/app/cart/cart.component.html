@@ -42,7 +42,7 @@
                 <i class="material-icons">attach_money</i> Checkout
             </ng-template>
             <div class="order-container" *ngIf="cartItems.length; else emptyCart">
-                <app-order></app-order>
+                <app-order-form></app-order-form>
             </div>
         </mat-tab>
         <ng-template #emptyCart>

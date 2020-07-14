@@ -55,6 +55,7 @@ export class InMemoryDataService implements InMemoryDbService {
                         quantity: 1,
                     },
                 ],
+                canceled: false,
             },
             {
                 id: 2,
@@ -73,6 +74,7 @@ export class InMemoryDataService implements InMemoryDbService {
                         quantity: 2,
                     },
                 ],
+                canceled: true,
             },
         ];
         return { products, orders };

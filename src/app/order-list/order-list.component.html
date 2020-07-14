@@ -1,6 +1,7 @@
 <h2 fxLayout="row" fxLayoutAlign="center">Orders</h2>
 <div *ngIf="orders" class="grid">
-    <mat-card *ngFor="let order of orders; let index = index" class="gridItem">
+    <mat-card *ngFor="let order of orders; let index = index" class="gridItem" fxFlex.lt-md="100%">
+        <h3 fxLayout="row" fxLayoutAlign="center">Order # {{ order.id }}</h3>
         <div>
             Name: <strong>{{ order.userName }}</strong>
         </div>
@@ -11,26 +12,39 @@
             Address: <strong>{{ order.userAddress }}</strong>
         </div>
         <br />
-        <div *ngIf="products">
-            Products:
-            <div *ngFor="let orderProd of order.orderProducts" class="orderProduct">
-                Product name: <strong>{{ getOrderProductName(orderProd.productId) }}</strong
-                ><br />
-                Product quantity: <strong>{{ orderProd.quantity }}</strong>
-            </div>
-        </div>
+<!--        <div *ngIf="products">-->
+<!--            Products:-->
+<!--            <div *ngFor="let orderProd of order.orderProducts" class="orderProduct">-->
+<!--                Product name: <strong>{{ getOrderProductName(orderProd.productId) }}</strong-->
+<!--                ><br />-->
+<!--                Product quantity: <strong>{{ orderProd.quantity }}</strong>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div *ngIf="shippings">-->
+<!--            Shipping:-->
+<!--            <strong>{{ getOrderShippingCost(order.shipping, 'name') }}</strong>-->
+<!--        </div>-->
         <div *ngIf="shippings">
-            Shipping:
-            <strong>{{ getOrderShippingCost(order.shipping, 'name') }}</strong>
-        </div>
-        <div>
             Total price:
             <strong>{{
                 getOrderShippingCost(order.shipping) + order.orderPrice | currency
             }}</strong>
         </div>
-        <button class="deleteButton" mat-raised-button (click)="deleteOrder(order)">
-            Delete
+        <button
+            *ngIf="order.canceled"
+            class="deleteButton"
+            mat-raised-button
+            [disabled]="order.canceled"
+        >
+            Order is canceled
+        </button>
+        <button
+            *ngIf="!order.canceled"
+            class="deleteButton"
+            mat-raised-button
+            [routerLink]="['/orders', order.id]"
+        >
+            Details
         </button>
     </mat-card>
 </div>

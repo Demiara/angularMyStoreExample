@@ -8,4 +8,5 @@ export interface Order {
     orderPrice: number;
     shipping: number;
     orderProducts: CartItem[];
+    canceled?: boolean;
 }
