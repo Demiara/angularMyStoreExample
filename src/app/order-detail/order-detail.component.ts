@@ -16,6 +16,7 @@ export class OrderDetailComponent implements OnInit {
     public order$: Observable<Order>;
     public products: Product[];
     public shippings: Shipping[];
+    public productDetailPanelOpen = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -36,8 +37,8 @@ export class OrderDetailComponent implements OnInit {
         this.router.navigate(['/orders', { id: orderId }]);
     }
 
-    public getOrderProductName(id: number): string {
-        return this.service.getOrderProductName(id);
+    public getOrderProduct(id: number): Product {
+        return this.service.getOrderProduct(id);
     }
 
     public getOrderShippingCost(id: number | string, type?: string): number | string {

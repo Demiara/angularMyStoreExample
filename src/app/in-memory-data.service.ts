@@ -13,6 +13,8 @@ export class InMemoryDataService implements InMemoryDbService {
                 price: 799,
                 inStock: 2,
                 description: 'A large phone with one of the best screens',
+                fullDescription:
+                    'Phone XL dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             },
             {
                 id: 2,
@@ -20,6 +22,8 @@ export class InMemoryDataService implements InMemoryDbService {
                 price: 299,
                 inStock: 3,
                 description: 'A great phone with one of the best cameras',
+                fullDescription:
+                    'Phone Mini dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             },
             {
                 id: 3,
@@ -27,6 +31,8 @@ export class InMemoryDataService implements InMemoryDbService {
                 price: 599,
                 inStock: 2,
                 description: 'A great phone for those who like comfort',
+                fullDescription:
+                    'Phone Additional dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             },
             {
                 id: 4,
@@ -34,6 +40,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 price: 299,
                 inStock: 0,
                 description: '',
+                fullDescription: '',
             },
         ];
 

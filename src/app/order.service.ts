@@ -66,9 +66,8 @@ export class OrderService {
         );
     }
 
-    public getOrderProductName(id: number): string {
-        const currentProduct = this.products.find(product => product.id === id);
-        return currentProduct.name;
+    public getOrderProduct(id: number): Product {
+        return this.products.find(product => product.id === id);
     }
 
     public getOrderShippingCost(id: number | string, type?: string): number | string {

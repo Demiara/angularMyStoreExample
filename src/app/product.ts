@@ -4,4 +4,5 @@ export interface Product {
     price: number;
     inStock: number;
     description: string;
+    fullDescription: string;
 }

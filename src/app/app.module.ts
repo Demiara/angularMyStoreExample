@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,6 +57,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
         MatSelectModule,
         MatCardModule,
         MatTabsModule,
+        MatExpansionModule,
         ReactiveFormsModule,
         FormsModule,
         RouterModule,
