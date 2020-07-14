@@ -22,7 +22,12 @@ h2 {
     margin-bottom: 5px;
 }
 
-.product-info{
+.order-button {
+    width: 50%;
+    margin-bottom: 5px;
+}
+
+.product-info {
     width: 30%;
     margin: 0 auto;
 }

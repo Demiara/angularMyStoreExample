@@ -32,6 +32,11 @@ export class OrderDetailComponent implements OnInit {
         this.service.gotoOrders();
     }
 
+    public cancelOrder(order: Order): void {
+        const canceledOrder = { ...order, canceled: true } as Order;
+        this.service.updateOrder(canceledOrder).subscribe(() => this.gotoOrders());
+    }
+
     public getOrderProduct(id: number): Product {
         return this.service.getOrderProduct(id);
     }

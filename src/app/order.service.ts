@@ -58,6 +58,14 @@ export class OrderService {
         );
     }
 
+    public updateOrder(order: Order): Observable<any> {
+        return this.http.put(this.ordersUrl, order, this.httpOptions).pipe(
+            tap(_ => this.log(`canceled order id=${order.id}`)),
+            tap(() => this.openSnackBar('Your order has been successfully canceled', 'Ok')),
+            catchError(handleError<any>('updateOrder')),
+        );
+    }
+
     public deleteOrder(order: Order | number): Observable<Order> {
         const id = typeof order === 'number' ? order : order.id;
         const url = `${this.ordersUrl}/${id}`;
