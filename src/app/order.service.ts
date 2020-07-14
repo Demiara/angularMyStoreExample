@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from './product';
 import { Shipping } from './shipping';
 import { ProductService } from './product.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -24,6 +25,7 @@ export class OrderService {
 
     constructor(
         private http: HttpClient,
+        private router: Router,
         private productService: ProductService,
         private messageService: MessageService,
         private snackBar: MatSnackBar,
@@ -73,6 +75,15 @@ export class OrderService {
     public getOrderShippingCost(id: number | string, type?: string): number | string {
         const shippingCost = this.shippings.find(shipping => shipping.id === +id);
         return type === 'name' ? shippingCost.type : shippingCost.price;
+    }
+
+    public gotoOrders() {
+        this.router.navigate(['/orders']);
+    }
+
+    public gotoOrder(order: Order) {
+        const orderId = order ? order.id : null;
+        this.router.navigate(['/orders', orderId]);
     }
 
     private log(message: string): void {

@@ -18,11 +18,7 @@ export class OrderDetailComponent implements OnInit {
     public shippings: Shipping[];
     public productDetailPanelOpen = false;
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private service: OrderService,
-    ) {}
+    constructor(private route: ActivatedRoute, private service: OrderService) {}
 
     public ngOnInit(): void {
         this.order$ = this.route.paramMap.pipe(
@@ -32,9 +28,8 @@ export class OrderDetailComponent implements OnInit {
         this.shippings = this.service.shippings;
     }
 
-    public gotoOrders(order: Order) {
-        const orderId = order ? order.id : null;
-        this.router.navigate(['/orders', { id: orderId }]);
+    public gotoOrders() {
+        this.service.gotoOrders();
     }
 
     public getOrderProduct(id: number): Product {

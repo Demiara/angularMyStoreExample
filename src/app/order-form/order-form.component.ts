@@ -44,7 +44,9 @@ export class OrderFormComponent extends Unsubscribe(Object) implements OnInit, O
 
     public onSubmit() {
         const totalOrder: Order = this.orderForm.value;
-        this.orderService.addOrder(totalOrder).subscribe(order => console.log(order));
+        this.orderService
+            .addOrder(totalOrder)
+            .subscribe(order => this.orderService.gotoOrder(order));
         this.cartService.clearCart();
     }
 
