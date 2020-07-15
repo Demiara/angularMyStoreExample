@@ -3,7 +3,7 @@
         <h1>My Store</h1>
         <a [routerLink]="['/']" mat-raised-button>Products</a>
         <a [routerLink]="['orders']" mat-raised-button>Orders</a>
-        <a mat-raised-button href="#" target="_blank">Subscriptions</a>
+        <a [routerLink]="['subscriptions']" mat-raised-button>Subscriptions</a>
     </div>
     <div fxFlex="65%" fxLayout="row" fxLayoutAlign="end">
         <a [routerLink]="['/cart']" mat-raised-button
