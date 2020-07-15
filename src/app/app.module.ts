@@ -30,6 +30,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
         OrderFormComponent,
         OrderListComponent,
         OrderDetailComponent,
+        SubscriptionListComponent,
     ],
     imports: [
         BrowserAnimationsModule,
