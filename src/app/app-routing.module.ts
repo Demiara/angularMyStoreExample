@@ -6,9 +6,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
     { path: '', component: ProductListComponent },
+    { path: 'products/:id', component: ProductDetailComponent },
     { path: 'orders', component: OrderListComponent },
     { path: 'orders/:id', component: OrderDetailComponent },
     { path: 'subscriptions', component: SubscriptionListComponent },

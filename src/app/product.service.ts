@@ -4,13 +4,14 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, shareReplay, startWith, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { muteFirst } from './utils/api-util';
 import { handleError } from './utils/api-util';
 import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
 import { BrowserStorageService } from './storage.service';
 import { SubscribeDialogData } from './subscribe-dialog-data';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Order } from './order';
 
 @Injectable({
     providedIn: 'root',
@@ -74,20 +75,26 @@ export class ProductService {
             .subscribe();
     }
 
-    private getProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(this.productsUrl).pipe(
-            tap(_ => this.log('fetched products')),
-            tap(product => this._products$.next(product)),
-            catchError(handleError<Product[]>('getProducts', [])),
-        );
-    }
-
     public unsubscribeItem(index: number, subscribe: SubscribeDialogData): void {
         const subscribesClone = this._subscribeProductItems$.value.slice();
         subscribesClone.splice(index, 1);
         this._subscribeProductItems$.next(subscribesClone);
         this.openSnackBar('You have successfully unsubscribed from the product', 'Ok');
         this.log(`You have successfully unsubscribed from the product: ${subscribe.product.name}`);
+    }
+
+    public getProduct(id: number | string) {
+        return this.getProducts().pipe(
+            map((products: Product[]) => products.find(product => product.id === +id)),
+        );
+    }
+
+    private getProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(this.productsUrl).pipe(
+            tap(_ => this.log('fetched products')),
+            tap(product => this._products$.next(product)),
+            catchError(handleError<Product[]>('getProducts', [])),
+        );
     }
 
     private getSubscribe(): SubscribeDialogData[] {

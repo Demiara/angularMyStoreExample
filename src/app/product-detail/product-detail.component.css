@@ -1,0 +1,27 @@
+:host {
+    padding: 10px;
+    max-width: 1000px;
+}
+h2 {
+    color: #1976d2;
+    margin: 0 auto;
+    padding: 10px;
+    font-weight: lighter;
+    font-size: 28px;
+}
+
+.product-detail-container {
+    margin: 0 auto;
+    max-width: 600px;
+    width: 90%;
+}
+
+mat-form-field.mat-form-field {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.product-detail-button {
+    width: 50%;
+    margin-bottom: 5px;
+}

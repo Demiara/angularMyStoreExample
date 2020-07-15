@@ -18,30 +18,30 @@ export class OrderDetailComponent implements OnInit {
     public shippings: Shipping[];
     public productDetailPanelOpen = false;
 
-    constructor(private route: ActivatedRoute, private service: OrderService) {}
+    constructor(private route: ActivatedRoute, private orderService: OrderService) {}
 
     public ngOnInit(): void {
         this.order$ = this.route.paramMap.pipe(
-            switchMap((params: ParamMap) => this.service.getOrder(params.get('id'))),
+            switchMap((params: ParamMap) => this.orderService.getOrder(params.get('id'))),
         );
-        this.products = this.service.products;
-        this.shippings = this.service.shippings;
+        this.products = this.orderService.products;
+        this.shippings = this.orderService.shippings;
     }
 
     public gotoOrders() {
-        this.service.gotoOrders();
+        this.orderService.gotoOrders();
     }
 
     public cancelOrder(order: Order): void {
         const canceledOrder = { ...order, canceled: true } as Order;
-        this.service.updateOrder(canceledOrder).subscribe(() => this.gotoOrders());
+        this.orderService.updateOrder(canceledOrder).subscribe(() => this.gotoOrders());
     }
 
     public getOrderProduct(id: number): Product {
-        return this.service.getOrderProduct(id);
+        return this.orderService.getOrderProduct(id);
     }
 
     public getOrderShippingCost(id: number | string, type?: string): number | string {
-        return this.service.getOrderShippingCost(id, type);
+        return this.orderService.getOrderShippingCost(id, type);
     }
 }
