@@ -33,11 +33,38 @@
     <div fxLayout="row wrap" fxLayoutAlign="center">
         <div class="product-detail-button">
             <button mat-raised-button color="accent" (click)="saveProduct(product)">
+                <i class="material-icons">save</i>
                 Save product
             </button>
         </div>
         <div class="product-detail-button">
-            <button mat-raised-button (click)="gotoProducts()">Back to product list</button>
+            <button
+                *ngIf="product.inStock; else outOfStock"
+                (click)="addToCart(product)"
+                mat-raised-button
+            >
+                <i class="material-icons">add_shopping_cart</i>
+                Add to cart
+            </button>
+        </div>
+        <ng-template #outOfStock>
+            <ng-container *ngIf="subscribeItems$ | async as subscribedProduct">
+                <button
+                    [disabled]="disableSubscribeButton(subscribedProduct, product.id)"
+                    (click)="subscribeToProduct(product)"
+                    mat-raised-button
+                >
+                    <i class="material-icons">mail_outline</i>
+                    Subscribe
+                </button>
+            </ng-container>
+        </ng-template>
+
+        <div class="product-detail-button">
+            <button mat-raised-button (click)="gotoProducts()">
+                <i class="material-icons">keyboard_backspace</i>
+                Back to product list
+            </button>
         </div>
     </div>
 </div>

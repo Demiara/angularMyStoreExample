@@ -22,3 +22,9 @@ h2 {
     font-weight: lighter;
     font-size: 28px;
 }
+
+.product-detail-link {
+    cursor: pointer;
+    color: #1976d2;
+    font-weight: bold;
+}

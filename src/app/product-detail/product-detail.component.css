@@ -22,6 +22,7 @@ mat-form-field.mat-form-field {
 }
 
 .product-detail-button {
-    width: 50%;
-    margin-bottom: 5px;
+    width: auto;
+    margin: 10px;
+
 }

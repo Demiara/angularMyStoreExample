@@ -12,6 +12,7 @@ import { BrowserStorageService } from './storage.service';
 import { SubscribeDialogData } from './subscribe-dialog-data';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Order } from './order';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -34,6 +35,7 @@ export class ProductService {
 
     constructor(
         private http: HttpClient,
+        private router: Router,
         private messageService: MessageService,
         public dialog: MatDialog,
         private snackBar: MatSnackBar,
@@ -87,6 +89,18 @@ export class ProductService {
         return this.getProducts().pipe(
             map((products: Product[]) => products.find(product => product.id === +id)),
         );
+    }
+
+    public updateProduct(product: Product): Observable<any> {
+        return this.http.put(this.productsUrl, product, this.httpOptions).pipe(
+            tap(_ => this.log(`updated product id=${product.id}`)),
+            tap(() => this.openSnackBar('Your product has been successfully updated', 'Ok')),
+            catchError(handleError<any>('updateProduct')),
+        );
+    }
+
+    public gotoProducts() {
+        this.router.navigate(['/']);
     }
 
     private getProducts(): Observable<Product[]> {
