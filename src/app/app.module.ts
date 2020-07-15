@@ -33,6 +33,7 @@ import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { SubscriptionListComponent } from './subscription-list/subscription-list
         OrderListComponent,
         OrderDetailComponent,
         SubscriptionListComponent,
+        ProductDetailComponent,
     ],
     imports: [
         BrowserAnimationsModule,
