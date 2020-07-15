@@ -57,7 +57,7 @@ export class ProductService {
         dialogRef
             .afterClosed()
             .pipe(
-                tap(result => this.log(`You signed up for ${result.product.name} successfully`)),
+                tap(result => this.log(`You subscribed for ${result.product.name} successfully`)),
                 tap(result =>
                     this._subscribeProductItems$.next([
                         ...this._subscribeProductItems$.value,
@@ -80,6 +80,14 @@ export class ProductService {
             tap(product => this._products$.next(product)),
             catchError(handleError<Product[]>('getProducts', [])),
         );
+    }
+
+    public unsubscribeItem(index: number, subscribe: SubscribeDialogData): void {
+        const subscribesClone = this._subscribeProductItems$.value.slice();
+        subscribesClone.splice(index, 1);
+        this._subscribeProductItems$.next(subscribesClone);
+        this.openSnackBar('You have successfully unsubscribed from the product', 'Ok');
+        this.log(`You have successfully unsubscribed from the product: ${subscribe.product.name}`);
     }
 
     private getSubscribe(): SubscribeDialogData[] {

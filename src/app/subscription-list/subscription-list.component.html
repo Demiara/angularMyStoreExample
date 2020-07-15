@@ -1,1 +1,40 @@
-<p>subscription-list works!</p>
+<h2 fxLayout="row" fxLayoutAlign="center">Subscriptions</h2>
+<ng-container *ngIf="subscribeItems$ | async as subscribes">
+    <ng-container *ngIf="subscribes.length; else noOneSub">
+        <mat-list role="list" class="subscribe-container">
+            <mat-divider></mat-divider>
+            <mat-list-item *ngFor="let subscribe of subscribes; let index = index">
+                <mat-icon mat-list-icon>east</mat-icon>
+                <div class="sub-items">
+                    <div mat-line>
+                        <strong>{{ subscribe.product.name }}</strong>
+                    </div>
+                    <div mat-line>Your name: {{ subscribe.name }}</div>
+                    <div mat-line>Your phone: {{ subscribe.phone }}</div>
+                </div>
+
+                <button
+                    mat-raised-button
+                    color="warn"
+                    class="unsubscribe-button"
+                    (click)="unsubscribeItem(index, subscribe)"
+                >
+                    <i class="material-icons">unsubscribe</i>
+                    Unsubscribe
+                </button>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </mat-list>
+    </ng-container>
+</ng-container>
+<ng-template #noOneSub>
+    <div class="empty-sub-container">
+        <h2 fxLayout="row" fxLayoutAlign="center">You don't have any subscriptions</h2>
+        <div fxLayout="row" fxLayoutAlign="center">
+            <a [routerLink]="['/']" mat-raised-button class="empty-sub-button">
+                <i class="material-icons">keyboard_backspace</i>
+                Back to products
+            </a>
+        </div>
+    </div>
+</ng-template>

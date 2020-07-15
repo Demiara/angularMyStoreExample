@@ -29,7 +29,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 id: 3,
                 name: 'Phone Additional',
                 price: 599,
-                inStock: 2,
+                inStock: 0,
                 description: 'A great phone for those who like comfort',
                 fullDescription:
                     'Phone Additional dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',

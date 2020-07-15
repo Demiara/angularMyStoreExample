@@ -15,6 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +33,7 @@ import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
+
 
 @NgModule({
     declarations: [
@@ -60,6 +63,9 @@ import { SubscriptionListComponent } from './subscription-list/subscription-list
         MatCardModule,
         MatTabsModule,
         MatExpansionModule,
+        MatListModule,
+        MatIconModule,
+        MatFormFieldModule,
         ReactiveFormsModule,
         FormsModule,
         RouterModule,
@@ -71,7 +77,6 @@ import { SubscriptionListComponent } from './subscription-list/subscription-list
             passThruUnknownUrl: true,
             put204: false, // return entity after PUT/update
         }),
-        MatFormFieldModule,
         AppRoutingModule,
     ],
     providers: [],
