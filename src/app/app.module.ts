@@ -32,6 +32,7 @@ import { RouterModule } from '@angular/router';
 import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
 import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { ProductSearchComponent } from './product-search/product-search.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
         SubscribeDialogComponent,
         SubscriptionListComponent,
         TopBarComponent,
+        ProductSearchComponent,
     ],
     imports: [
         BrowserAnimationsModule,
