@@ -1,37 +1,44 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Product } from './product';
-import { CartItem } from './cart-item';
-import { MessageService } from './message.service';
-import { BrowserStorageService } from './storage.service';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BrowserStorageService } from './storage.service';
+import { CartItem } from './cart-item';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { MessageService } from './message.service';
+import { Product } from './product';
 import { ProductService } from './product.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CartService {
-    private readonly storeKey = 'cartItems';
+    public cartProducts$: Observable<Product[]>;
+    public orderPrice$: Observable<number>;
 
     private readonly _cartItems$ = new BehaviorSubject<CartItem[]>([]);
     public readonly cartItems$: Observable<CartItem[]> = this._cartItems$.asObservable();
 
-    public cartProducts$: Observable<Product[]>;
-    public orderPrice$: Observable<number>;
+    private readonly logSource = 'CartService';
+    private readonly storeKey = 'cartItems';
 
     constructor(
         private http: HttpClient,
-        private productService: ProductService,
-        private messageService: MessageService,
-        private snackBar: MatSnackBar,
         private localStorageService: BrowserStorageService,
+        private messageService: MessageService,
+        private productService: ProductService,
     ) {
         this._cartItems$.next(this.getItems());
         this.cartItems$.subscribe(value =>
             this.localStorageService.set(this.storeKey, JSON.stringify(value)),
         );
+    }
+
+    private getItems(): CartItem[] {
+        try {
+            return JSON.parse(this.localStorageService.get(this.storeKey)) || [];
+        } catch (e) {
+            return [];
+        }
     }
 
     public addToCart(product: Product): void {
@@ -42,43 +49,12 @@ export class CartService {
             ]);
         } else {
             if (!this.updateProductQuantity(product)) {
-                this.openSnackBar('The product is out of stock', 'Ok');
+                this.messageService.openSnackBar('The product is out of stock', 'Ok', 2000);
                 return;
             }
         }
-        this.openSnackBar('Product successfully added to cart', 'Ok');
-        this.log(`${product.name} successfully added to cart`);
-    }
-
-    public deleteProductFromCart(index: number, product: Product): void {
-        const itemsClone = this._cartItems$.value.slice();
-        itemsClone.splice(index, 1);
-        this._cartItems$.next(itemsClone);
-        this.openSnackBar('Product successfully removed from cart', 'Ok');
-        this.log(`${product.name} successfully removed from cart`);
-    }
-
-    public clearCart(): void {
-        this._cartItems$.next([]);
-        this.log(`Cart has been cleared`);
-    }
-
-    public setCartProducts() {
-        this.cartProducts$ = combineLatest([this.productService.products$, this.cartItems$]).pipe(
-            filter(([products]) => Boolean(products)),
-            map(([products, cartItems]) => this.cartItemsToProducts(products, cartItems)),
-        );
-    }
-
-    public setOrderPrice() {
-        this.orderPrice$ = this.cartProducts$.pipe(
-            withLatestFrom(this.cartItems$),
-            map(([products, cartItems]) => this.getTotalPrice(products, cartItems)),
-        );
-    }
-
-    private foundProductIndex(product: Product): number {
-        return this._cartItems$.value.findIndex(i => i.productId === product.id);
+        this.messageService.openSnackBar('Product successfully added to cart', 'Ok', 2000);
+        this.messageService.log(this.logSource, `${product.name} successfully added to cart`);
     }
 
     private isProductInCart(product: Product): boolean {
@@ -101,12 +77,28 @@ export class CartService {
         return true;
     }
 
-    private getItems(): CartItem[] {
-        try {
-            return JSON.parse(this.localStorageService.get(this.storeKey)) || [];
-        } catch (e) {
-            return [];
-        }
+    private foundProductIndex(product: Product): number {
+        return this._cartItems$.value.findIndex(i => i.productId === product.id);
+    }
+
+    public clearCart(): void {
+        this._cartItems$.next([]);
+        this.messageService.log(this.logSource, `Cart has been cleared`);
+    }
+
+    public deleteProductFromCart(index: number, product: Product): void {
+        const itemsClone = this._cartItems$.value.slice();
+        itemsClone.splice(index, 1);
+        this._cartItems$.next(itemsClone);
+        this.messageService.openSnackBar('Product successfully removed from cart', 'Ok', 2000);
+        this.messageService.log(this.logSource, `${product.name} successfully removed from cart`);
+    }
+
+    public setCartProducts(): void {
+        this.cartProducts$ = combineLatest([this.productService.products$, this.cartItems$]).pipe(
+            filter(([products]) => Boolean(products)),
+            map(([products, cartItems]) => this.cartItemsToProducts(products, cartItems)),
+        );
     }
 
     private cartItemsToProducts(products: Product[], cartItems: CartItem[]): Product[] {
@@ -115,20 +107,17 @@ export class CartService {
         });
     }
 
+    public setOrderPrice(): void {
+        this.orderPrice$ = this.cartProducts$.pipe(
+            withLatestFrom(this.cartItems$),
+            map(([products, cartItems]) => this.getTotalPrice(products, cartItems)),
+        );
+    }
+
     private getTotalPrice(products: Product[], cartItems: CartItem[]): number {
         return cartItems.reduce(
             (total, cartItem, index) => total + cartItem.quantity * products[index].price,
             0,
         );
-    }
-
-    private log(message: string): void {
-        this.messageService.add(`CartService: ${message}`);
-    }
-
-    private openSnackBar(message: string, action: string) {
-        this.snackBar.open(message, action, {
-            duration: 2000,
-        });
     }
 }

@@ -3,6 +3,6 @@ export interface Product {
     name: string;
     price: number;
     inStock: number;
-    description: string;
-    fullDescription: string;
+    description?: string;
+    fullDescription?: string;
 }

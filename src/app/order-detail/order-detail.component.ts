@@ -1,11 +1,11 @@
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { OrderService } from '../order.service';
 import { Observable } from 'rxjs';
 import { Order } from '../order';
-import { switchMap } from 'rxjs/operators';
+import { OrderService } from '../order.service';
 import { Product } from '../product';
 import { Shipping } from '../shipping';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-order-detail',
@@ -14,9 +14,9 @@ import { Shipping } from '../shipping';
 })
 export class OrderDetailComponent implements OnInit {
     public order$: Observable<Order>;
+    public productDetailPanelOpen = false;
     public products: Product[];
     public shippings: Shipping[];
-    public productDetailPanelOpen = false;
 
     constructor(private route: ActivatedRoute, private orderService: OrderService) {}
 
@@ -28,13 +28,13 @@ export class OrderDetailComponent implements OnInit {
         this.shippings = this.orderService.shippings;
     }
 
-    public gotoOrders() {
-        this.orderService.gotoOrders();
-    }
-
     public cancelOrder(order: Order): void {
         const canceledOrder = { ...order, canceled: true } as Order;
         this.orderService.updateOrder(canceledOrder).subscribe(() => this.gotoOrders());
+    }
+
+    private gotoOrders(): void {
+        this.orderService.gotoOrders();
     }
 
     public getOrderProduct(id: number): Product {

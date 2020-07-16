@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SubscribeDialogData } from '../subscribe-dialog-data';
 import { ProductService } from '../product.service';
+import { SubscribeDialogData } from '../subscribe-dialog-data';
 
 @Component({
     selector: 'app-subscription-list',

@@ -13,7 +13,7 @@ export class SubscribeDialogComponent {
         @Inject(MAT_DIALOG_DATA) public data: SubscribeDialogData,
     ) {}
 
-    onNoClick(): void {
+    public onNoClick(): void {
         this.dialogRef.close();
     }
 }

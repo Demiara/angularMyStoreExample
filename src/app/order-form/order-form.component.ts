@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { OrderService } from '../order.service';
-import { combineLatest, Observable } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../cart.service';
-import { Unsubscribe } from '../utils/unsubscribe.mixin';
+import { combineLatest, Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { Shipping } from '../shipping';
 import { Order } from '../order';
+import { OrderService } from '../order.service';
+import { Shipping } from '../shipping';
+import { Unsubscribe } from '../utils/unsubscribe.mixin';
 
 @Component({
     selector: 'app-order-form',
@@ -14,9 +14,6 @@ import { Order } from '../order';
     styleUrls: ['./order-form.component.css'],
 })
 export class OrderFormComponent extends Unsubscribe(Object) implements OnInit, OnDestroy {
-    public shippingCosts$: Observable<Shipping[]>;
-    public totalPrice$: Observable<number>;
-
     public orderForm = new FormGroup({
         userName: new FormControl('', Validators.required),
         userPhone: new FormControl('', Validators.required),
@@ -26,8 +23,10 @@ export class OrderFormComponent extends Unsubscribe(Object) implements OnInit, O
         orderProducts: new FormControl({ value: [] }, Validators.required),
         canceled: new FormControl(false),
     });
+    public shippingCosts$: Observable<Shipping[]>;
+    public totalPrice$: Observable<number>;
 
-    constructor(private orderService: OrderService, private cartService: CartService) {
+    constructor(private cartService: CartService, private orderService: OrderService) {
         super();
     }
 
@@ -38,23 +37,11 @@ export class OrderFormComponent extends Unsubscribe(Object) implements OnInit, O
         this.getCartProducts();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         super.ngOnDestroy();
     }
 
-    public onSubmit() {
-        const totalOrder: Order = this.orderForm.value;
-        this.orderService
-            .addOrder(totalOrder)
-            .subscribe(order => this.orderService.gotoOrder(order));
-        this.cartService.clearCart();
-    }
-
-    public getRequiredErrorMessage() {
-        return 'You must enter a value';
-    }
-
-    private getOrderPrice() {
+    private getOrderPrice(): void {
         this.cartService.orderPrice$.pipe(takeUntil(this.unsubscribe$)).subscribe(total =>
             this.orderForm.patchValue({
                 orderPrice: total,
@@ -62,7 +49,7 @@ export class OrderFormComponent extends Unsubscribe(Object) implements OnInit, O
         );
     }
 
-    private setTotalPrice() {
+    private setTotalPrice(): void {
         this.totalPrice$ = combineLatest([
             this.cartService.orderPrice$,
             this.orderForm.get('shipping').valueChanges,
@@ -80,11 +67,23 @@ export class OrderFormComponent extends Unsubscribe(Object) implements OnInit, O
         return shippingItem.price;
     }
 
-    private getCartProducts() {
+    private getCartProducts(): void {
         this.cartService.cartItems$.pipe(takeUntil(this.unsubscribe$)).subscribe(cartItems =>
             this.orderForm.patchValue({
                 orderProducts: cartItems,
             }),
         );
+    }
+
+    public getRequiredErrorMessage(): string {
+        return 'You must enter a value';
+    }
+
+    public onSubmit(): void {
+        const totalOrder: Order = this.orderForm.value;
+        this.orderService
+            .addOrder(totalOrder)
+            .subscribe(order => this.orderService.gotoOrder(order));
+        this.cartService.clearCart();
     }
 }
