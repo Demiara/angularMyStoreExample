@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BrowserStorageService } from './storage.service';
-import { catchError, map, shareReplay, startWith, tap } from 'rxjs/operators';
+import { catchError, filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { handleError, muteFirst } from './utils/api-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -84,6 +84,7 @@ export class ProductService {
         dialogRef
             .afterClosed()
             .pipe(
+                filter((subscribe) => Boolean(subscribe)),
                 tap(result => {
                     this._subscribeProductItems$.next([
                         ...this._subscribeProductItems$.value,
