@@ -14,9 +14,9 @@
                     fxFlex="49%"
                     fxFlex.lt-md="100%"
                 >
-                    <span>{{ item.name }}</span>
+                    <span class="product-name">{{ item.name }}</span>
                     <span> {{ item.price | currency }}</span>
-                    <span>quantity: {{ cartItems[index].quantity }}</span>
+                    <span>x {{ cartItems[index].quantity }}</span>
                     <button mat-raised-button (click)="deleteProductFromCart(index, item)">
                         Delete
                     </button>

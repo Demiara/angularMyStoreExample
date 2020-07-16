@@ -30,6 +30,9 @@ h3 {
 .empty-cart-container {
     margin-top: 15px;
 }
+.product-name {
+    width: 50%;
+}
 .order-container {
     margin: 0 auto;
     max-width: 450px;
