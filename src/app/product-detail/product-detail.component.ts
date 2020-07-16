@@ -13,7 +13,7 @@ import { switchMap } from 'rxjs/operators';
     styleUrls: ['./product-detail.component.css'],
 })
 export class ProductDetailComponent implements OnInit {
-    public product$: Observable<Product>;
+    public product: Product;
     public subscribeItems$: Observable<SubscribeDialogData[]>;
 
     constructor(
@@ -23,14 +23,19 @@ export class ProductDetailComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        this.product$ = this.route.paramMap.pipe(
-            switchMap((params: ParamMap) => this.productService.getProduct(params.get('id'))),
-        );
+        this.route.paramMap
+            .pipe(switchMap((params: ParamMap) => this.productService.getProduct(params.get('id'))))
+            .subscribe(product => (this.product = { ...product }));
         this.subscribeItems$ = this.productService.subscribeProductItems$;
     }
 
     public addToCart(product: Product): void {
         this.cartService.addToCart(product);
+    }
+
+    public checkStockValue(inStock: string): void {
+        const newQuantity = parseInt(inStock, 10);
+        newQuantity ? (this.product.inStock = newQuantity) : (this.product.inStock = 0);
     }
 
     public disableSubscribeButton(subscribedProduct: SubscribeDialogData[], id: number): boolean {
@@ -41,9 +46,8 @@ export class ProductDetailComponent implements OnInit {
         this.productService.gotoProducts();
     }
 
-    public saveProduct(product: Product): void {
-        this.productService.updateProduct(product)
-            .subscribe(() => this.gotoProducts());
+    public saveProduct(): void {
+        this.productService.updateProduct(this.product).subscribe(() => this.gotoProducts());
     }
 
     public subscribeToProduct(product: Product): void {

@@ -2,7 +2,7 @@
     fxLayout="row wrap"
     fxLayoutAlign="center"
     class="product-detail-container"
-    *ngIf="product$ | async as product"
+    *ngIf="product"
 >
     <h2>Product # {{ product.id }}</h2>
     <mat-form-field appearance="outline">
@@ -15,7 +15,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Quantity in stock</mat-label>
-        <input matInput [(ngModel)]="product.inStock" placeholder="inStock" />
+        <input matInput [ngModel]="product.inStock" (ngModelChange)="checkStockValue($event)" placeholder="inStock" />
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Description</mat-label>
@@ -32,7 +32,7 @@
     </mat-form-field>
     <div fxLayout="row wrap" fxLayoutAlign="center">
         <div class="product-detail-button">
-            <button mat-raised-button color="accent" (click)="saveProduct(product)">
+            <button mat-raised-button color="accent" (click)="saveProduct()">
                 <i class="material-icons">save</i>
                 Save product
             </button>

@@ -122,6 +122,7 @@ export class ProductService {
 
     public updateProduct(product: Product): Observable<any> {
         return this.http.put(this.productsUrl, product, this.httpOptions).pipe(
+            tap(() => this.getProducts().subscribe()),
             tap(() => {
                 this.messageService.log(this.logSource, `updated product id=${product.id}`);
                 this.messageService.openSnackBar(
