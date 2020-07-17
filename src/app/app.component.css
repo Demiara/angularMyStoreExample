@@ -1,5 +1,7 @@
 .log-container {
     padding: 10px;
+    width: 90%;
+    margin: auto;
 }
 
 .log-container h4 {
