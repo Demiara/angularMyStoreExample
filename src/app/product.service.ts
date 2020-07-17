@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { BrowserStorageService } from './storage.service';
 import { catchError, filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { handleError, muteFirst } from './utils/api-util';
@@ -71,6 +71,16 @@ export class ProductService {
         this.router.navigate(['/']);
     }
 
+    public searchProducts(term: string): Observable<Product[]> {
+        if (!term.trim()) {
+            return of([]);
+        }
+        return this.http.get<Product[]>(`${this.productsUrl}/?name=${term}`).pipe(
+            tap(_ => this.messageService.log(this.logSource, `found products matching "${term}"`)),
+            catchError(handleError<Product[]>('searchProducts', [])),
+        );
+    }
+
     public subscribeToProduct(product: Product): void {
         const dialogRef = this.dialog.open(SubscribeDialogComponent, {
             width: '350px',
@@ -84,7 +94,7 @@ export class ProductService {
         dialogRef
             .afterClosed()
             .pipe(
-                filter((subscribe) => Boolean(subscribe)),
+                filter(subscribe => Boolean(subscribe)),
                 tap(result => {
                     this._subscribeProductItems$.next([
                         ...this._subscribeProductItems$.value,
