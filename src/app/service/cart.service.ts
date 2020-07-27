@@ -1,12 +1,12 @@
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { BrowserStorageService } from './storage.service';
-import { CartItem } from './cart-item';
-import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
+import { CartItem } from '../model/cart-item';
+import { Product } from '../model/product';
 import { MessageService } from './message.service';
-import { Product } from './product';
 import { ProductService } from './product.service';
+import { BrowserStorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root',

@@ -1,11 +1,11 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Order } from '../order';
-import { OrderService } from '../order.service';
-import { Product } from '../product';
-import { Shipping } from '../shipping';
 import { switchMap } from 'rxjs/operators';
+import { Order } from '../../model/order';
+import { Product } from '../../model/product';
+import { Shipping } from '../../model/shipping';
+import { OrderService } from '../../service/order.service';
 
 @Component({
     selector: 'app-order-detail',

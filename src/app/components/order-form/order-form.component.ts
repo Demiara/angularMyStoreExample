@@ -1,12 +1,12 @@
-import { CartService } from '../cart.service';
-import { combineLatest, Observable } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { Order } from '../order';
-import { OrderService } from '../order.service';
-import { Shipping } from '../shipping';
-import { Unsubscribe } from '../utils/unsubscribe.mixin';
+import { Unsubscribe } from '../../mixin/unsubscribe.mixin';
+import { Order } from '../../model/order';
+import { Shipping } from '../../model/shipping';
+import { CartService } from '../../service/cart.service';
+import { OrderService } from '../../service/order.service';
 
 @Component({
     selector: 'app-order-form',

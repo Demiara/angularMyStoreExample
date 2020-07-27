@@ -1,12 +1,12 @@
-import { CartComponent } from './cart/cart.component';
 import { NgModule } from '@angular/core';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { OrderListComponent } from './order-list/order-list.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { Routes, RouterModule } from '@angular/router';
-import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
+import { RouterModule, Routes } from '@angular/router';
+import { CartComponent } from './components/cart/cart.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { SubscriptionListComponent } from './components/subscription-list/subscription-list.component';
 
 const routes: Routes = [
     { path: '', component: ProductListComponent },

@@ -1,15 +1,15 @@
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { BrowserStorageService } from './storage.service';
-import { catchError, filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
-import { handleError, muteFirst } from './utils/api-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageService } from './message.service';
-import { Product } from './product';
 import { Router } from '@angular/router';
-import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
-import { SubscribeDialogData } from './subscribe-dialog-data';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
+import { SubscribeDialogComponent } from '../components/subscribe-dialog/subscribe-dialog.component';
+import { Product } from '../model/product';
+import { SubscribeDialogData } from '../model/subscribe-dialog-data';
+import { handleError, muteFirst } from '../utils/api.util';
+import { MessageService } from './message.service';
+import { BrowserStorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root',

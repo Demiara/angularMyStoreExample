@@ -1,9 +1,9 @@
-import { CartService } from '../cart.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../product';
-import { ProductService } from '../product.service';
-import { SubscribeDialogData } from '../subscribe-dialog-data';
+import { Product } from '../../model/product';
+import { SubscribeDialogData } from '../../model/subscribe-dialog-data';
+import { CartService } from '../../service/cart.service';
+import { ProductService } from '../../service/product.service';
 
 @Component({
     selector: 'app-product-list',

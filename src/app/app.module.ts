@@ -1,39 +1,26 @@
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { CartComponent } from './cart/cart.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { HttpClientModule } from '@angular/common/http';
-import { InMemoryDataService } from './in-memory-data.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgModule } from '@angular/core';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { OrderFormComponent } from './order-form/order-form.component';
-import { OrderListComponent } from './order-list/order-list.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductListComponent } from './product-list/product-list.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { SubscribeDialogComponent } from './subscribe-dialog/subscribe-dialog.component';
-import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
-import { ProductSearchComponent } from './product-search/product-search.component';
-
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CartComponent } from './components/cart/cart.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { OrderFormComponent } from './components/order-form/order-form.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductSearchComponent } from './components/product-search/product-search.component';
+import { SubscribeDialogComponent } from './components/subscribe-dialog/subscribe-dialog.component';
+import { SubscriptionListComponent } from './components/subscription-list/subscription-list.component';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { MaterialModule } from './material/material.module';
+import { InMemoryDataService } from './service/in-memory-data.service';
 
 @NgModule({
     declarations: [
@@ -45,10 +32,10 @@ import { ProductSearchComponent } from './product-search/product-search.componen
         PageNotFoundComponent,
         ProductDetailComponent,
         ProductListComponent,
+        ProductSearchComponent,
         SubscribeDialogComponent,
         SubscriptionListComponent,
         TopBarComponent,
-        ProductSearchComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -56,19 +43,7 @@ import { ProductSearchComponent } from './product-search/product-search.componen
         FlexLayoutModule,
         FormsModule,
         HttpClientModule,
-        MatButtonModule,
-        MatCardModule,
-        MatDialogModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatSelectModule,
-        MatSnackBarModule,
-        MatTableModule,
-        MatTabsModule,
-        MatToolbarModule,
+        MaterialModule,
         ReactiveFormsModule,
         RouterModule,
         HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {

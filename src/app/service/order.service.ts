@@ -1,14 +1,14 @@
-import { catchError, map, tap } from 'rxjs/operators';
-import { handleError } from './utils/api-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MessageService } from './message.service';
-import { Observable } from 'rxjs';
-import { Order } from './order';
-import { Product } from './product';
-import { ProductService } from './product.service';
 import { Router } from '@angular/router';
-import { Shipping } from './shipping';
+import { Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Order } from '../model/order';
+import { Product } from '../model/product';
+import { Shipping } from '../model/shipping';
+import { handleError } from '../utils/api.util';
+import { MessageService } from './message.service';
+import { ProductService } from './product.service';
 
 @Injectable({
     providedIn: 'root',

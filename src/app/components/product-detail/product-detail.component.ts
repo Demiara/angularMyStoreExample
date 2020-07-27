@@ -1,11 +1,11 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { CartService } from '../cart.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Product } from '../product';
-import { ProductService } from '../product.service';
-import { SubscribeDialogData } from '../subscribe-dialog-data';
 import { switchMap } from 'rxjs/operators';
+import { Product } from '../../model/product';
+import { SubscribeDialogData } from '../../model/subscribe-dialog-data';
+import { CartService } from '../../service/cart.service';
+import { ProductService } from '../../service/product.service';
 
 @Component({
     selector: 'app-product-detail',

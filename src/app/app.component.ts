@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from './message.service';
+import { MessageService } from './service/message.service';
 
 @Component({
     selector: 'app-root',
@@ -7,9 +7,7 @@ import { MessageService } from './message.service';
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-    title = 'AngularMyStoreExample';
-
     constructor(public messageService: MessageService) {}
 
-    ngOnInit(): void {}
+    public ngOnInit(): void {}
 }

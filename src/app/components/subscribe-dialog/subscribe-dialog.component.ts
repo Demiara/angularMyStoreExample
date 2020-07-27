@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SubscribeDialogData } from '../subscribe-dialog-data';
+import { SubscribeDialogData } from '../../model/subscribe-dialog-data';
 
 @Component({
     selector: 'app-add-to-cart-dialog',
