@@ -19,13 +19,15 @@ import { ProductSearchComponent } from './components/product-search/product-sear
 import { SubscribeDialogComponent } from './components/subscribe-dialog/subscribe-dialog.component';
 import { SubscriptionListComponent } from './components/subscription-list/subscription-list.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
-import { MaterialModule } from './material/material.module';
-import { InMemoryDataService } from './service/in-memory-data.service';
+import { MaterialModule } from './material.module';
+import { MessagesComponent } from './components/messages/messages.component';
+import { InMemoryDataService } from './services/in-memory-data.service';
 
 @NgModule({
     declarations: [
         AppComponent,
         CartComponent,
+        MessagesComponent,
         OrderDetailComponent,
         OrderFormComponent,
         OrderListComponent,

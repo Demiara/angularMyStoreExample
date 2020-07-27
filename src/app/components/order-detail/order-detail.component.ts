@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { Order } from '../../model/order';
-import { Product } from '../../model/product';
-import { Shipping } from '../../model/shipping';
-import { OrderService } from '../../service/order.service';
+import { Order } from '../../models/order';
+import { Product } from '../../models/product';
+import { Shipping } from '../../models/shipping';
+import { OrderService } from '../../services/order.service';
 
 @Component({
     selector: 'app-order-detail',
@@ -33,15 +33,15 @@ export class OrderDetailComponent implements OnInit {
         this.orderService.updateOrder(canceledOrder).subscribe(() => this.gotoOrders());
     }
 
-    private gotoOrders(): void {
-        this.orderService.gotoOrders();
-    }
-
     public getOrderProduct(id: number): Product {
         return this.orderService.getOrderProduct(id);
     }
 
     public getOrderShippingCost(id: number | string, type?: string): number | string {
         return this.orderService.getOrderShippingCost(id, type);
+    }
+
+    public gotoOrders(): void {
+        this.orderService.gotoOrders();
     }
 }

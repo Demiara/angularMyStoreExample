@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { Unsubscribe } from '../../mixin/unsubscribe.mixin';
-import { Order } from '../../model/order';
-import { Shipping } from '../../model/shipping';
-import { CartService } from '../../service/cart.service';
-import { OrderService } from '../../service/order.service';
+import { Unsubscribe } from '../../mixins/unsubscribe.mixin';
+import { Order } from '../../models/order';
+import { Shipping } from '../../models/shipping';
+import { CartService } from '../../services/cart.service';
+import { OrderService } from '../../services/order.service';
 
 @Component({
     selector: 'app-order-form',
