@@ -9,8 +9,9 @@ export class MessageService {
 
     constructor(private snackBar: MatSnackBar) {}
 
-    public clear(): void {
+    public clear(): string[] {
         this.messages = [];
+        return this.messages;
     }
 
     public log(source: string, message: string): void {

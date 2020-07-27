@@ -1,9 +1,9 @@
-<div class="log-container" *ngIf="messageService.messages.length">
+<div class="log-container" *ngIf="messages.length">
     <h4>Logs:</h4>
     <ul>
-        <li *ngFor="let message of messageService.messages">
+        <li *ngFor="let message of messages">
             {{ message }}
         </li>
     </ul>
-    <button mat-stroked-button color="primary" (click)="messageService.clear()">clear</button>
+    <button mat-stroked-button color="primary" (click)="clearMessages()">clear</button>
 </div>
